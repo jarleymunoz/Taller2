@@ -1,7 +1,7 @@
 <?php
 $server='localhost';
 $username='root';
-$password='Borginie940.';
+$password='';//cambio clave
 $database='secure_db';
 
 //Comentario de prueba
