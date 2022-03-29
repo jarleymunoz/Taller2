@@ -9,7 +9,7 @@ try{
     
 }catch(PDOException $e){
 die('conexión fallida: '.$e->getMessage());
-
+//Comentario de prueba Ricardo
 }
 
 ?>
