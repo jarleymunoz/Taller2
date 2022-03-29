@@ -4,6 +4,8 @@ $username='root';
 $password='Borginie940.';
 $database='secure_db';
 
+//Comentario de prueba
+
 try{
     $conn=new PDO("mysql:host=$server;dbname=$database;",$username,$password);
     
