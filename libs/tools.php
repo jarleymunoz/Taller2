@@ -1,15 +1,16 @@
 <?php
-/**
- * Función de limpieza de una cadena de texto 
- * @param cadena: Recibe la cadena de texto a limpiar. 
- * */
-function limpiarCadena($cadena)
-{
-    $patron = array('/<script>.*<\/script>/');
-    $cadena = preg_replace($patron, '', $cadena);
-    $cadena = htmlspecialchars($cadena);
-    return $cadena;
-}
+  /**
+     * Función que limpia todos los datos de entrada
+     * @param cadena: Recibe la cadena a limpiar.
+     */
+    // Limpieza de datos de entrada
+    function Limpieza($cadena)
+    {
+        $patron = array('/<script>.*<\/script>/');
+        $cadena = preg_replace($patron, '', $cadena);
+        $cadena = htmlspecialchars($cadena);
+        return $cadena;
+    }
 
 /**
  * Función para limpiar parametros de entrada 
@@ -325,18 +326,7 @@ function myTuits()
         fclose($fp);
     }
 
-    /**
-     * Función que limpia todos los datos de entrada
-     * @param cadena: Recibe la cadena a limpiar.
-     */
-    // Limpieza de datos de entrada
-    function Limpieza($cadena)
-    {
-        $patron = array('/<script>.*<\/script>/');
-        $cadena = preg_replace($patron, '', $cadena);
-        $cadena = htmlspecialchars($cadena);
-        return $cadena;
-    }
+  
 
     /**
      * Función que recibe una cadena y retorna true si es texto
@@ -453,7 +443,24 @@ function myTuits()
             }
         }
     }
-
+    /**
+     * Función que recibe una cadena y retorna true si es una direccion
+     * @param clave: Recibe la cadena y valida si cumple con el patron de la dirección
+     */
+    function validarDireccion($direccion)
+    {
+        $cla = trim($direccion);
+        if ($cla == "" && trim($cla) == "") {
+            return false;
+        } else {
+            $patron = '/^[a-zA-Z0-9, ]*$/';
+            if (preg_match($patron, $cla)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
     function validarTuit($tuit)
     {
         if (strlen($tuit) <= 140) {

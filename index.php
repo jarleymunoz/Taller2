@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Ingreso</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="libs/style.css">
 
 </head>
 
@@ -20,7 +20,7 @@
 
   <?php
  
-  if (isset($_POST["btnLogin"])) {
+ /* if (isset($_POST["btnLogin"])) {
     foreach ($_POST as $key => $value) {
       $_POST[$key] = Limpieza($value);
     }
@@ -36,9 +36,7 @@
           } else {
             $user = $_POST["txtUser"];
             $pass = $_POST["txtPass"];
-            /*$user = $_SESSION["user"];
-            $pass = $_SESSION["pass"];*/
-          }
+              }
           header("location: Index2.php");
         } else {
           echo '<script language="javascript">alert("Datos incorrectos");</script>';
@@ -51,7 +49,7 @@
       echo '<script language="javascript">alert("Petición inválida");</script>';
     }
   }
-  anticsrf();
+  anticsrf();*/
 
   if(isset($_POST["btnRegistrar"]))
   {
@@ -66,8 +64,8 @@
 
     <form class="login-container" method="post">
       <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
-      <p><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" required="required"></p>
-      <p><input type="password" name="txtClave" id="txtClave" placeholder="Clave" required="required"></p>
+      <p><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" ></p>
+      <p><input type="password" name="txtClave" id="txtClave" placeholder="Clave" ></p>
       <p><input type="submit" name="btnIngresar" value="Ingresar"></p>
       <p><input type="submit" name="btnRegistrar" value="Registrar"></p>
     </form>
