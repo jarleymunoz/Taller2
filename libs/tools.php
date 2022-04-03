@@ -1,16 +1,26 @@
 <?php
-  /**
-     * Función que limpia todos los datos de entrada
-     * @param cadena: Recibe la cadena a limpiar.
-     */
-    // Limpieza de datos de entrada
-    function Limpieza($cadena)
-    {
-        $patron = array('/<script>.*<\/script>/');
-        $cadena = preg_replace($patron, '', $cadena);
-        $cadena = htmlspecialchars($cadena);
-        return $cadena;
+
+/**
+ * Función que limpia la llave valor del metodo _POST
+ */
+function LimpiezaKV()
+{
+    foreach ($_POST as $key => $value) {
+        $_POST[$key] = Limpieza($value);
     }
+}
+/**
+ * Función que limpia todos los datos de entrada
+ * @param cadena: Recibe la cadena a limpiar.
+ */
+// Limpieza de datos de entrada
+function Limpieza($cadena)
+{
+    $patron = array('/<script>.*<\/script>/');
+    $cadena = preg_replace($patron, '', $cadena);
+    $cadena = htmlspecialchars($cadena);
+    return $cadena;
+}
 
 /**
  * Función para limpiar parametros de entrada 
@@ -20,50 +30,50 @@ function limpiarEntradas()
 {
     if (isset($_POST)) {
         foreach ($_POST as $key => $value) {
-            $_POST[$key] = limpiarCadena($value);
+            $_POST[$key] = Limpieza($value);
         }
     }
 }
-  /**
-     * Función que permite el aseguramiento de la sesión
-     * 
-     */
-    function sesionSegura()
-    {
-        //obtener los parametros de la cookie de sesión
-        $cookieParams = session_get_cookie_params();
-        $path = $cookieParams["path"];
+/**
+ * Función que permite el aseguramiento de la sesión
+ * 
+ */
+function sesionSegura()
+{
+    //obtener los parametros de la cookie de sesión
+    $cookieParams = session_get_cookie_params();
+    $path = $cookieParams["path"];
 
-        //inicio y control de la sesion
-        $secure = false;
-        $httpOnly = true;
-        $sameSite = 'strict';
+    //inicio y control de la sesion
+    $secure = false;
+    $httpOnly = true;
+    $sameSite = 'strict';
 
-        session_set_cookie_params([
-            'lifetime' => $cookieParams["lifetime"],
-            'path'    => $path,
-            'domain'  => $_SERVER['HTTP_HOST'],
-            'secure'  => $secure,
-            'httponly' => $httpOnly,
-            'samesite' => $sameSite
-        ]);
-        session_start();
-        session_regenerate_id(true); //permite que cada llamado se genere una nueva sesión
+    session_set_cookie_params([
+        'lifetime' => $cookieParams["lifetime"],
+        'path'    => $path,
+        'domain'  => $_SERVER['HTTP_HOST'],
+        'secure'  => $secure,
+        'httponly' => $httpOnly,
+        'samesite' => $sameSite
+    ]);
+    session_start();
+    session_regenerate_id(true); //permite que cada llamado se genere una nueva sesión
 
-    }
-    /**
-     * Función que devuelve el color escogido para mostrar al usuario registrado
-     * * @param usuario: Recibe el nombre de usuario.
-     * * @param pass:    Recibe la contraseña del usuario.
-     */
+}
+/**
+ * Función que devuelve el color escogido para mostrar al usuario registrado
+ * * @param usuario: Recibe el nombre de usuario.
+ * * @param pass:    Recibe la contraseña del usuario.
+ */
 /**
  * funcion que genera un número aleatorio cada vez que haga un envío de datos.
  */
-    function anticsrf()
-    {
-        $anticsrf = random_int(1000000, 9999999);
-        $_SESSION['anticsrf'] = $anticsrf;
-    }
+function anticsrf()
+{
+    $anticsrf = random_int(1000000, 9999999);
+    $_SESSION['anticsrf'] = $anticsrf;
+}
 
 /**
  * Función que guarda los datos de un usuario.
@@ -219,12 +229,9 @@ function limpiartuits()
     $fp = fopen($file, "r");
     while (!feof($fp)) {
         $data = fgets($fp);
-        if(!empty($data)){
-            str_replace(" ","",$data);
-
+        if (!empty($data)) {
+            str_replace(" ", "", $data);
         }
-     
-  
     }
 
     fclose($fp);
@@ -326,7 +333,7 @@ function myTuits()
         fclose($fp);
     }
 
-  
+
 
     /**
      * Función que recibe una cadena y retorna true si es texto
@@ -469,5 +476,3 @@ function myTuits()
             return false;
         }
     }
-
-  
