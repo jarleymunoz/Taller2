@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Inicio</title>
+  <title></title>
   <link rel="stylesheet" href="libs/style.css">
 
 </head>

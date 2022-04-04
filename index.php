@@ -38,7 +38,7 @@
             }
 
             if (password_verify($clave, $pass)) {
-              $_SESSION['usuario']['usuario']= $user;
+              $_SESSION['usuario']['usuario'] = $user;
               $_SESSION['usuario']['nombre'] = $nombre;
               $_SESSION['usuario']['id']     = $id;
               $_SESSION['usuario']['foto']   = $foto;
@@ -54,11 +54,10 @@
       } else {
         echo '<script language="javascript">alert("Datos incorrectos");</script>';
       }
-    }
-    else {
+    } else {
       echo '<script language="javascript">alert("Petición inválida");</script>';
     }
-  } 
+  }
   //Botón de Registro
   if (isset($_POST["btnRegistrar"])) {
     header("Location: registro.php");

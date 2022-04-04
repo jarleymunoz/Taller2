@@ -8,10 +8,8 @@
 </head>
 <body>
 <?php
-//require "libs/tools.php";
 require "libs/conexion.php";
 require "encabezado.php";
-//sesionSegura();
 LimpiezaKV();
 
 if(!isset($_SESSION['usuario']))
