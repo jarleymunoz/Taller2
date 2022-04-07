@@ -17,8 +17,12 @@
     if (!isset($_SESSION['usuario'])) {
         header("Location: index.php");
     }
-    $query = $conn->prepare("SELECT id_articulo, id_usuario, texto, publico, fecha_publi FROM articulo WHERE id_usuario =? order by fecha_publi desc");
-    $res = $query->execute([$_SESSION['usuario']['id']]);
+    $idUsuarioActual=$_SESSION['usuario']['id'];
+    $query = $conn->prepare("SELECT id_articulo, id_usuario, texto, publico, fecha_publi 
+    FROM articulo WHERE id_usuario =:id_usuario order by fecha_publi desc");
+    $res = $query->execute([
+        'id_usuario'=>$idUsuarioActual
+    ]);
     if ($res == true) {
         $articulos = $query->fetchAll(PDO::FETCH_OBJ);
         $existeArticulo = true;
@@ -27,8 +31,10 @@
         foreach ($articulos as $data) {
             if ($data->id_articulo == $_POST['btnPublicar_1']) {
                 if ($data->publico == "NO") {
-                    $publicar = $conn->prepare("UPDATE articulo SET publico= 'SI' WHERE id_articulo= $data->id_articulo");
-                    $res1 = $publicar->execute();
+                    $publicar = $conn->prepare("UPDATE articulo SET publico= 'SI' WHERE id_articulo=:id_articulo");
+                    $res1 = $publicar->execute([
+                       'id_articulo'=>$data->id_articulo     
+                    ]);
                     if ($res1 == true) {
                         echo '<script language="javascript">alert("Artículo publicado");</script>';
                         header("Location: misArticulos.php");
@@ -43,8 +49,10 @@
         foreach ($articulos as $data) {
             if ($data->id_articulo == $_POST['btnDespublicar_1']) {
                 if ($data->publico == "SI") {
-                    $despublicar = $conn->prepare("UPDATE articulo SET publico= 'NO' WHERE id_articulo= $data->id_articulo ");
-                    $res2 = $despublicar->execute();
+                    $despublicar = $conn->prepare("UPDATE articulo SET publico= 'NO' WHERE id_articulo= :id_articulo");
+                    $res2 = $despublicar->execute([
+                    'id_articulo'=>$data->id_articulo 
+                ]);
                     if ($res2 == true) {
                         echo '<script language="javascript">alert("Artículo despublicado");</script>';
                         header("Location: misArticulos.php");
@@ -58,8 +66,10 @@
     if (isset($_POST['btnBorrar_1'])) {
         foreach ($articulos as $data) {
             if ($data->id_articulo == $_POST['btnBorrar_1']) {
-                $delete = $conn->prepare("DELETE FROM articulo WHERE id_articulo=?");
-                $res3 = $delete->execute([$data->id_articulo]);
+                $delete = $conn->prepare("DELETE FROM articulo WHERE id_articulo=:id_articulo");
+                $res3 = $delete->execute([
+                    'id_articulo'=>$data->id_articulo
+                ]);
                 if ($res3 == true) {
                     echo '<script language="javascript">alert("Artículo borrado");</script>';
                     header("Location: misArticulos.php");

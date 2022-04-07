@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mensajes recibidos</title>
+    <title>Mensajes enviados</title>
     <link rel="stylesheet" href="libs/style.css">
 
 </head>
@@ -13,16 +13,15 @@
     require "encabezado.php";
     require "encabezadoMensajes.php";
     LimpiezaKV();
-    $target='_blank';
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: index.php");
     }
     $idUsuarioActual = $_SESSION['usuario']['id'];
     $query = $conn->prepare("SELECT u.usuario, u.foto, m.texto, m.archivo, m.fecha 
-    FROM mensaje m JOIN usuario u ON m.id_remite = u.id_usuario WHERE m.id_destino = :id_destino");
+    FROM mensaje m JOIN usuario u ON m.id_destino = u.id_usuario WHERE m.id_remite = :id_remite ORDER BY fecha DESC");
     $res = $query->execute([
-        'id_destino'=>$idUsuarioActual
+        'id_remite'=>$idUsuarioActual
     ]);
     if ($res == true) {
         $mensajes = $query->fetchAll(PDO::FETCH_OBJ);
@@ -36,7 +35,7 @@
                 <div class="index input">
                     <form method="post">
                         <br>
-                        <label name="lblAutor_1">De: <?php echo $data->usuario; ?> </label>
+                        <label name="lblAutor_1">Para: <?php echo $data->usuario; ?> </label>
                         <br>
                         <img name="imgFoto_1" src="<?php echo $data->foto; ?>"  right="100" width="100">
                         <br>
@@ -44,7 +43,7 @@
                         <br>
                         <label name="lblFecha_1">Fecha:  <?php echo $data->fecha; ?> </label>
                         <br>
-                        <a name="lnkAdjunto_1"href=" <?php echo $data->archivo?>"target="_blank">Arch. adjunto  </a>
+                        <a name="lnkAdjunto_1"href=" <?php echo $data->archivo?> "target="_blank">Arch. adjunto  </a>
                     </form>
                 </div>
             </div>

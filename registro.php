@@ -66,6 +66,29 @@
         echo '<script language="javascript">alert("estado civil inválido");</script>';
         $estadoCivil = "";
       }
+      //asigno foto
+      if (isset($_FILES['fulFoto']) && $_FILES['fulFoto']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['fulFoto']['tmp_name'];
+        $fileName = $_FILES['fulFoto']['name'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+        $allowedfileExtensions = array('jpg', 'jpeg');
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+          // directory in which the uploaded file will be moved
+          $uploadFileDir = './img/';
+          $dest_path = $uploadFileDir . $newFileName;
+          if (move_uploaded_file($fileTmpPath, $dest_path)) {
+            $img = imagecreatefromjpeg($dest_path);
+            imagejpeg($img, $dest_path, 100);
+            imagedestroy($img);
+          }
+        } else {
+          echo '<script language="javascript">alert("Imagen no válida");</script>';
+        }
+      } else {
+        $dest_path = '';
+      }
       //asigno a usuario
       if (validarUsuario($_POST['txtUsuario'])) {
         $usuario = Limpieza($_POST["txtUsuario"]);
@@ -85,19 +108,44 @@
 
       if ($nombre != "" && $apellido != "" && $correo != "" && $direccion != "" && $hijos != "" && $estadoCivil != "" && $usuario != "" && $clave != "" && $claveHash != "") {
 
-        $query = $conn->prepare("SELECT usuario FROM usuario WHERE usuario = ?");
-        $ex = $query->execute([$usuario]);
-        if ($ex == true) {
-          $obj =  $query->fetchAll(PDO::FETCH_OBJ);
-          if (empty($obj)) {
-            $ruta = $_FILES['fulFoto']['name'];
-            $rutahash = password_hash($ruta, PASSWORD_DEFAULT);
-            $rutahash = 'img/' . $rutahash . ".jpg";
-            move_uploaded_file($_FILES['fulFoto']['tmp_name'], $rutahash);
-
-            $quer = $conn->prepare("INSERT INTO usuario (nombre, apellido, correo, direccion, num_hijos, estado_civil, foto, usuario, clave) VALUES(?,?,?,?,?,?,?,?,?)");
-            $res = $quer->execute([$nombre, $apellido, $correo, $direccion, $hijos, $estadoCivil, $rutahash, $usuario,  $claveHash]);
-            if ($res == true) {
+        $query = $conn->prepare("SELECT usuario 
+                                 FROM usuario 
+                                 WHERE usuario =:usuario");
+        $res = $query->execute([
+          'usuario' => $usuario
+        ]);
+        if ($res == true) {
+          $usua =  $query->fetchAll(PDO::FETCH_OBJ);
+          if (empty($usua)) {
+            $query1 = $conn->prepare("INSERT INTO usuario (nombre, 
+                                                           apellido,
+                                                           correo,
+                                                           direccion,
+                                                           num_hijos,
+                                                           estado_civil,
+                                                           foto,
+                                                           usuario,clave) 
+                                      VALUES(:nombre,
+                                             :apellido,
+                                             :correo,
+                                             :direccion,
+                                             :num_hijos,
+                                             :estado_civil,
+                                             :foto,
+                                             :usuario,
+                                             :clave)");
+            $res1 = $query1->execute([
+              'nombre' => $nombre,
+              'apellido' => $apellido,
+              'correo' => $correo,
+              'direccion' => $direccion,
+              'num_hijos' => $hijos,
+              'estado_civil' => $estadoCivil,
+              'foto' => $dest_path,
+              'usuario' => $usuario,
+              'clave' => $claveHash
+            ]);
+            if ($res1 == true) {
               header("Location: index.php");
             }
           } else {
@@ -131,7 +179,7 @@
           <option value="Casado">Casado</option>
           <option value="Otro">Otro</option>
         </select></p>
-      <p>Foto de perfil
+      <p>Foto de perfil (jpg,jpeg)
         <input type="file" name="fulFoto" id="fulFoto">
       </p>
       <p><input type="text" placeholder="Usuario" id="txtUsuario" name="txtUsuario"></p>

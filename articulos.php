@@ -16,7 +16,9 @@ if(!isset($_SESSION['usuario']))
 {
    header("Location: index.php");
 }
- $query = $conn->prepare("SELECT u.nombre, u.foto, a.texto, a.fecha_publi FROM articulo a JOIN usuario u ON a.id_usuario = u.id_usuario WHERE a.publico = 'SI'order by a.fecha_publi desc");
+ $query = $conn->prepare("SELECT u.nombre, u.foto, a.texto, a.fecha_publi 
+ FROM articulo a JOIN usuario u ON a.id_usuario = u.id_usuario 
+ WHERE a.publico = 'SI'order by a.fecha_publi desc");
  $res = $query->execute();
  if($res==true)
  {

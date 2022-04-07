@@ -62,6 +62,13 @@ function sesionSegura()
 
 }
 /**
+ * Función que cierra la sesión del usuario
+ */
+function cerrarSesion(){
+    session_destroy();
+    header("Location: index.php");
+}
+/**
  * Función que devuelve el color escogido para mostrar al usuario registrado
  * * @param usuario: Recibe el nombre de usuario.
  * * @param pass:    Recibe la contraseña del usuario.

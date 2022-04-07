@@ -13,19 +13,21 @@
   require "libs/tools.php";
   require "libs/conexion.php";
   sesionSegura();
-
+  foreach ($_POST as $key => $value) {
+    $_POST[$key] = Limpieza($value);
+  }
   //Botón de Ingresar
   if (isset($_POST["btnIngresar"])) {
-    foreach ($_POST as $key => $value) {
-      $_POST[$key] = Limpieza($value);
-    }
+    
     if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
       if (validarUsuario($_POST['txtUsuario']) == true && validarClave($_POST['txtClave']) == true) {
         $usuario = Limpieza($_POST["txtUsuario"]);
         $clave = Limpieza($_POST["txtClave"]);
 
-        $query = $conn->prepare("SELECT id_usuario,nombre,usuario,clave,foto FROM usuario WHERE usuario =?");
-        $res = $query->execute([$usuario]);
+        $query = $conn->prepare("SELECT id_usuario,nombre,usuario,clave,foto FROM usuario WHERE usuario =:usuario");
+        $res = $query->execute([
+          'usuario'=>$usuario
+        ]);
         if ($res == true) {
           $usuar = $query->fetchAll(PDO::FETCH_OBJ);
           if (!empty($usuar)) {

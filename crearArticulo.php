@@ -12,29 +12,38 @@
     <?php
     require "encabezado.php";
     require "encabezadoArticulos.php";
-
+    LimpiezaKV();
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: index.php");
     }
-
+    $idUsuarioActual=$_SESSION['usuario']['id'];
     if (isset($_POST['btnCrear'])) {
-        LimpiezaKV();
+        
         if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
             //Falta crear función que limpie el texto
+            //Falta crear función que limpie el chkPublico
             if (($_POST['txtMensaje'])) {
                 if (isset($_POST['chkPublico'])) {
                     $articulo = Limpieza($_POST['txtMensaje']);
                     $publico = Limpieza($_POST['chkPublico']);
-                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) VALUES(?,?,?)");
-                    $res = $query->execute([$_SESSION['usuario']['id'], $articulo, 'SI']);
+                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) VALUES(:id_usuario,:texto,:publico)");
+                    $res = $query->execute([
+                       'id_usuario'=>$idUsuarioActual , 
+                       'texto'=>$articulo, 
+                       'publico'=>'SI'
+                    ]);
                     if ($res == true) {
                         echo '<script language="javascript">alert("Artículo creado");</script>';
                     }
                 } else {
                     $articulo = Limpieza($_POST['txtMensaje']);
-                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) VALUES(?,?,?)");
-                    $res = $query->execute([$_SESSION['usuario']['id'], $articulo, 'NO']);
+                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) VALUES(:id_usuario,:texto,:publico)");
+                    $res = $query->execute([
+                       'id_usuario'=>$idUsuarioActual , 
+                       'texto'=>$articulo, 
+                       'publico'=>'NO'
+                    ]);
                     if ($res == true) {
                         echo '<script language="javascript">alert("Artículo creado");</script>';
                     }
