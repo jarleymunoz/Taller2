@@ -13,12 +13,16 @@
     require "libs/tools.php";
     require "libs/conexion.php";
     sesionSegura();
+    //limpieza de llave valor del $_POST
     LimpiezaKV();
+  
     if (isset($_SESSION['usuario'])) {
-
+        //Botn para ir al inicio 
         if (isset($_POST['lnkHome'])) {
             header("Location: inicio.php");
         }
+          
+        //Botón para salir del aplicativo y cerrar la sesión.
         if (isset($_POST['btnSalir'])) {
             session_destroy();
             header("Location: index.php");
@@ -26,7 +30,8 @@
     } else {
         header("Location: index.php");
     }
-
+    
+    
     ?>
     <!-- partial:index.partial.html -->
     <div class="index">

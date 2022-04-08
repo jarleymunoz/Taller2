@@ -36,11 +36,11 @@
                        'id_articulo'=>$data->id_articulo     
                     ]);
                     if ($res1 == true) {
-                        echo '<script language="javascript">alert("Artículo publicado");</script>';
+                        notificaciones('Artículo publicado');
                         header("Location: misArticulos.php");
                     }
                 } else {
-                    echo '<script language="javascript">alert("El artículo está público");</script>';
+                    notificaciones('El artículo está público');
                 }
             }
         }
@@ -54,11 +54,11 @@
                     'id_articulo'=>$data->id_articulo 
                 ]);
                     if ($res2 == true) {
-                        echo '<script language="javascript">alert("Artículo despublicado");</script>';
+                        notificaciones('Artículo despublicado');
                         header("Location: misArticulos.php");
                     }
                 } else {
-                    echo '<script language="javascript">alert("El artículo está no está público");</script>';
+                    notificaciones('El artículo no está público');
                 }
             }
         }
@@ -71,7 +71,7 @@
                     'id_articulo'=>$data->id_articulo
                 ]);
                 if ($res3 == true) {
-                    echo '<script language="javascript">alert("Artículo borrado");</script>';
+                    notificaciones('Artículo borrado');
                     header("Location: misArticulos.php");
                 }
             }

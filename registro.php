@@ -14,6 +14,11 @@
   require "libs/conexion.php";
   sesionSegura();
 
+  //Boton de volver
+  if (isset($_POST['btnVolver'])) {
+    header("Location: index.php");
+  }
+  //Boton de registrar
   if (isset($_POST["btnRegistrar"])) {
     foreach ($_POST as $key => $value) {
       $_POST[$key] = Limpieza($value);
@@ -26,27 +31,27 @@
       if (validarTexto($_POST['txtNombre']) == true) {
         $nombre = Limpieza($_POST["txtNombre"]);
       } else {
-        echo '<script language="javascript">alert("Nombre inválido");</script>';
+        notificaciones('Nombre inválido');
         $nombre = "";
       }
       //asigno a apellido
       if (validarTexto($_POST['txtApellidos']) == true) {
         $apellido = Limpieza($_POST["txtApellidos"]);
       } else {
-        echo '<script language="javascript">alert("apellido inválido");</script>';
+        notificaciones('Apellido inválido');
         $apellido = "";
       }
       //asigno correo
       if (validarCorreo($_POST['txtCorreo']) == true) {
         $correo = Limpieza($_POST["txtCorreo"]);
       } else {
-        echo '<script language="javascript">alert("correo inválido");</script>';
+        notificaciones('Correo inválido');
         $correo = "";
       }
       //asigno dirección
 
       if ($_POST['txtDir'] == "") {
-        echo '<script language="javascript">alert("dirección inválida");</script>';
+        notificaciones('Dirección inválida');
         $direccion = "";
       } else {
         $direccion = Limpieza($_POST["txtDir"]);
@@ -55,7 +60,7 @@
       if (is_numeric($_POST['txtNumHij'])) {
         $hijos = Limpieza($_POST["txtNumHij"]);
       } else {
-        echo '<script language="javascript">alert("Número de hijos inválido");</script>';
+        notificaciones('Número de hijos inválido');
         $hijos = "";
       }
       //asigno a estado civil
@@ -63,7 +68,7 @@
       if (in_array($_POST['txtEstCivil'], $estados)) {
         $estadoCivil = Limpieza($_POST["txtEstCivil"]);
       } else {
-        echo '<script language="javascript">alert("estado civil inválido");</script>';
+        notificaciones('Estado civil inválido');
         $estadoCivil = "";
       }
       //asigno foto
@@ -84,7 +89,7 @@
             imagedestroy($img);
           }
         } else {
-          echo '<script language="javascript">alert("Imagen no válida");</script>';
+          notificaciones('Imagen no válida');
         }
       } else {
         $dest_path = '';
@@ -93,7 +98,7 @@
       if (validarUsuario($_POST['txtUsuario'])) {
         $usuario = Limpieza($_POST["txtUsuario"]);
       } else {
-        echo '<script language="javascript">alert("Usuario inválido");</script>';
+        notificaciones('Usuario inválido');
         $usuario = "";
       }
       //asigno a clave
@@ -101,13 +106,13 @@
         $clave = Limpieza($_POST["txtClave"]);
         $claveHash =  password_hash($clave, PASSWORD_DEFAULT);
       } else {
-        echo '<script language="javascript">alert("Contraseña inválida");</script>';
+        notificaciones('Contraseña inválida');
         $clave = "";
         $claveHash = "";
       }
 
       if ($nombre != "" && $apellido != "" && $correo != "" && $direccion != "" && $hijos != "" && $estadoCivil != "" && $usuario != "" && $clave != "" && $claveHash != "") {
-
+        //Busco el usuario en la base de datos para que no se repita
         $query = $conn->prepare("SELECT usuario 
                                  FROM usuario 
                                  WHERE usuario =:usuario");
@@ -146,17 +151,18 @@
               'clave' => $claveHash
             ]);
             if ($res1 == true) {
-              header("Location: index.php");
+              notificaciones('Usuario registrado correctamente');
+              header("refresh:2;url: index.php");
             }
           } else {
-            echo '<script language="javascript">alert("Usuario está en uso");</script>';
+            notificaciones('Usuario ya existe');
           }
         }
       } else {
-        echo '<script language="javascript">alert("Datos faltantes");</script>';
+        notificaciones('Datos faltantes');
       }
     } else {
-      echo '<script language="javascript">alert("Petición inválida");</script>';
+      notificaciones('Petición invalida');
     }
   }
 
@@ -186,6 +192,7 @@
       <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave"></p>
 
       <p><input type="submit" value="Registrar" name="btnRegistrar"></p>
+      <p><input type="submit" value="Volver" name="btnVolver"></p>
     </form>
   </div>
   <!-- partial -->

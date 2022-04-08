@@ -19,6 +19,7 @@
     }
     $dest_path = '';
     $idUsuarioActual = $_SESSION['usuario']['id'];
+    //query para extraer los usuarios para enviar el mensaje, no muestra el actual
     $query = $conn->prepare("SELECT id_usuario, usuario 
                              FROM usuario 
                              WHERE id_usuario!=:id_usuario");
@@ -28,13 +29,14 @@
     if ($res == true) {
         $usuarios = $query->fetchAll(PDO::FETCH_OBJ);
     }
-
+    //Botón de enviar
     if (isset($_POST['btnEnviar'])) {
+        //anticsrf evitar envío de peticiones cruzadas
         if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
             //Falta crear función que limpie el texto
-            //Falta función para validar los destinatarios?
-            if (($_POST['cmbDestino']) && ($_POST['txtMensaje'])) {
 
+            if (is_numeric($_POST['cmbDestino']) && ($_POST['txtMensaje'])) {
+                //asigo el archivo cargado
                 if (isset($_FILES['fulAdjunto']) && $_FILES['fulAdjunto']['error'] === UPLOAD_ERR_OK) {
                     $fileTmpPath = $_FILES['fulAdjunto']['tmp_name'];
                     $fileName = $_FILES['fulAdjunto']['name'];
@@ -49,10 +51,11 @@
                         move_uploaded_file($fileTmpPath, $dest_path);
                     }
                 }
-
+                //guardo el destinatario    
                 $destinatario = Limpieza($_POST['cmbDestino']);
+                //guardo el mensaje
                 $mensaje = Limpieza($_POST['txtMensaje']);
-
+                //query para insertar el mensaje
                 $query1 = $conn->prepare("INSERT INTO mensaje(id_remite,id_destino,texto,archivo) 
                                           VALUES (:id_remite,:id_destino,:texto,:archivo)");
                 $res1 = $query1->execute([
@@ -63,16 +66,20 @@
                 ]);
                 if ($res1 == true) {
 
-                    echo '<script language="javascript">alert("Mensaje enviado");</script>';
-                    //   header("Location: crearMensaje.php");
+                    notificaciones('Mensaje enviado');
+                    header("refresh:2;url=crearMensaje.php");
+                    
                 } else {
-                    echo '<script language="javascript">alert("Error de envío");</script>';
+                    notificaciones('Error de envío');
+                    header("refresh:2;url=crearMensaje.php");
                 }
             } else {
-                echo '<script language="javascript">alert("Texto inválido");</script>';
+                notificaciones('Texto inválido');
+                header("refresh:2;url=crearMensaje.php");
             }
         } else {
-            echo '<script language="javascript">alert("Petición inválida");</script>';
+            notificaciones('Petición inválida');
+            header("refresh:2;url=crearMensaje.php");
         }
         anticsrf();
     }

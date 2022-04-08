@@ -10,15 +10,19 @@
 <?php
 require "encabezado.php";
 require "encabezadoArticulos.php";
+//limpieza de llave valor del $_POST
 LimpiezaKV();
 
 if(!isset($_SESSION['usuario']))
 {
    header("Location: index.php");
 }
+//Query que trae todos los articulos públicos.
  $query = $conn->prepare("SELECT u.nombre, u.foto, a.texto, a.fecha_publi 
- FROM articulo a JOIN usuario u ON a.id_usuario = u.id_usuario 
- WHERE a.publico = 'SI'order by a.fecha_publi desc");
+                          FROM articulo a 
+                          JOIN usuario u ON a.id_usuario = u.id_usuario 
+                          WHERE a.publico = 'SI'
+                          order by a.fecha_publi desc");
  $res = $query->execute();
  if($res==true)
  {

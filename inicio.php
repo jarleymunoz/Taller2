@@ -1,53 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Inicio</title>
   <link rel="stylesheet" href="libs/style.css">
 
 </head>
+
 <body>
-<?php
-require "libs/conexion.php";
-require "encabezado.php";
-LimpiezaKV();
-
-if(!isset($_SESSION['usuario']))
-{
-   header("Location: index.php");
-}
-
-if(isset($_POST["lnkArticulos"])){
-    header("Location: articulos.php");
-}
-
-if(isset($_POST["lnkPerfil"]))
-{
-    header("Location: perfil.php");
-}
-
-if(isset($_POST["lnkMensajes"]))
-{
-    header("Location: mensajes.php");
+  <?php
+  require "libs/conexion.php";
+  require "encabezado.php";
+  LimpiezaKV();
+  //si no existe la sesión va al index,
+  if (!isset($_SESSION['usuario'])) {
+    header("Location: index.php");
+  } else {
+    //Boton de artículos
+    if (isset($_POST["lnkArticulos"])) {
+      if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
+        header("Location: articulos.php");
+      }
+ 
+    }
+    //Boton de perfil
+    if (isset($_POST["lnkPerfil"])) {
+      if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
+        header("Location: perfil.php");
+      }
+    
+    }
+    //Boton de artículos
+    if (isset($_POST["lnkMensajes"])) {
+      if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
+        header("Location: mensajes.php");
+      }
    
-}
-
-?>
-<!-- partial:index.partial.html -->
- <div class="index">
-     <div class="index input"> 
-       <form method="post">
+    }
+  }
+ 
+  ?>
+  <!-- partial:index.partial.html -->
+  <div class="index">
+    <div class="index input">
+      <form method="post">
         <br>
-         <input type="submit" class="login" name="lnkArticulos"value="Ver artículos">
-         
-         <input type="submit" class="login" name="lnkMensajes"value="Ver mensajes">
-         
-         <input type="submit" class="login" name="lnkPerfil"value="Mi perfil">
-         </form>
+        <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
+        <input type="submit" class="login" name="lnkArticulos" value="Ver artículos">
+
+        <input type="submit" class="login" name="lnkMensajes" value="Ver mensajes">
+
+        <input type="submit" class="login" name="lnkPerfil" value="Mi perfil">
+      </form>
     </div>
-</div>
-<!-- partial -->
+  </div>
+  <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  
+
 </body>
+
 </html>

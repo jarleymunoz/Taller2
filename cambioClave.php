@@ -48,21 +48,21 @@
                                 'id_usuario' => $idUsuarioActual
                             ]);
                             if ($res1 == true) {
-                                echo '<script language="javascript">alert("Clave actualizada");</script>';
+                                notificaciones('Clave actualizada');
                                 cerrarSesion();
                             }
                         } else {
-                            echo '<script language="javascript">alert("Claves no coinciden");</script>';
+                            notificaciones('Las claves no coinciden');
                         }
                     } else {
-                        echo '<script language="javascript">alert("Clave actual incorrecta");</script>';
+                        notificaciones('Clave actual incorrecta');
                     }
                 }
             } else {
-                echo '<script language="javascript">alert("Claves inválidas");</script>';
+                notificaciones('Claves inválidas');
             }
         } else {
-            echo '<script language="javascript">alert("Petición inválida");</script>';
+            notificaciones('Petición invalida');
         }
     }
     anticsrf();

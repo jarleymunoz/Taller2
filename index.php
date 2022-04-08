@@ -13,9 +13,7 @@
   require "libs/tools.php";
   require "libs/conexion.php";
   sesionSegura();
-  foreach ($_POST as $key => $value) {
-    $_POST[$key] = Limpieza($value);
-  }
+  LimpiezaKV();
   //Botón de Ingresar
   if (isset($_POST["btnIngresar"])) {
     
@@ -24,7 +22,9 @@
         $usuario = Limpieza($_POST["txtUsuario"]);
         $clave = Limpieza($_POST["txtClave"]);
 
-        $query = $conn->prepare("SELECT id_usuario,nombre,usuario,clave,foto FROM usuario WHERE usuario =:usuario");
+        $query = $conn->prepare("SELECT id_usuario,nombre,usuario,clave,foto 
+                                 FROM usuario 
+                                 WHERE usuario =:usuario");
         $res = $query->execute([
           'usuario'=>$usuario
         ]);
@@ -47,17 +47,18 @@
 
               header("Location: inicio.php");
             } else {
-              echo '<script language="javascript">alert("Clave incorrecta.");</script>';
+              notificaciones('Clave incorrecta');
             }
           } else {
-            echo '<script language="javascript">alert("Usuario no encontrado");</script>';
+            notificaciones('No se encuentra el usuario');
           }
         }
       } else {
-        echo '<script language="javascript">alert("Datos incorrectos");</script>';
+        notificaciones('Datos incorrectos');
       }
     } else {
-      echo '<script language="javascript">alert("Petición inválida");</script>';
+      notificaciones('Petición invalida');
+      header("refresh:2;url=inicio.php");
     }
   }
   //Botón de Registro
@@ -67,6 +68,9 @@
   anticsrf();
   ?>
   <!-- partial:index.partial.html -->
+  <div class="index">
+  <h2 class="integrantes-header">Ricardo A. Triviño - Jose A. Muñoz</h2>
+ </div>
   <div class="login">
     <div class="login-triangle"></div>
 

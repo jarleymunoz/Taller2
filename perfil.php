@@ -15,7 +15,7 @@
         header("Location: index.php");
     }
 
-    $idUsuarioActual = $_SESSION['usuario']['id'];    
+    $idUsuarioActual = $_SESSION['usuario']['id'];
 
     $query = $conn->prepare("SELECT nombre, apellido, correo, direccion, num_hijos, estado_civil 
                                FROM usuario WHERE id_usuario=:id_usuario ");
@@ -41,27 +41,27 @@
             if (validarTexto($_POST['txtNombre']) == true) {
                 $nombre = Limpieza($_POST["txtNombre"]);
             } else {
-                echo '<script language="javascript">alert("Nombre inválido");</script>';
+                notificaciones('Nómbre inválido');
                 $nombre = "";
             }
             //asigno a apellido
             if (validarTexto($_POST['txtApellidos']) == true) {
                 $apellido = Limpieza($_POST["txtApellidos"]);
             } else {
-                echo '<script language="javascript">alert("apellido inválido");</script>';
+                notificaciones('Apellido inválido');
                 $apellido = "";
             }
             //asigno correo
             if (validarCorreo($_POST['txtCorreo']) == true) {
                 $correo = Limpieza($_POST["txtCorreo"]);
             } else {
-                echo '<script language="javascript">alert("correo inválido");</script>';
+                notificaciones('Correo inválido');
                 $correo = "";
             }
             //asigno dirección
 
             if ($_POST['txtDir'] == "") {
-                echo '<script language="javascript">alert("dirección inválida");</script>';
+                notificaciones('Dirección inválida');
                 $direccion = "";
             } else {
                 $direccion = Limpieza($_POST["txtDir"]);
@@ -70,7 +70,7 @@
             if (is_numeric($_POST['txtNumHij'])) {
                 $hijos = Limpieza($_POST["txtNumHij"]);
             } else {
-                echo '<script language="javascript">alert("Número de hijos inválido");</script>';
+                notificaciones('Número de hijos inválido');
                 $hijos = "";
             }
             //asigno a estado civil
@@ -78,7 +78,7 @@
             if (in_array($_POST['txtEstCivil'], $estados)) {
                 $estadoCivil = Limpieza($_POST["txtEstCivil"]);
             } else {
-                echo '<script language="javascript">alert("estado civil inválido");</script>';
+                notificaciones('Estado civil inválido');
                 $estadoCivil = "";
             }
             //asigno foto
@@ -99,7 +99,7 @@
                         imagedestroy($img);
                     }
                 } else {
-                    echo '<script language="javascript">alert("Imagen no válida");</script>';
+                    notificaciones('Imagen inválida');
                 }
             }
 
@@ -125,8 +125,10 @@
                         'id_usuario' => $idUsuarioActual
                     ]);
                     if ($res1 == true) {
+
+                        notificaciones('Datos actualizados');
+                        header("refresh:2;url=inicio.php");
                         
-                        header("Location: perfil.php");
                     }
                 } else {
                     $query2 = $conn->prepare("UPDATE  usuario  SET 
@@ -147,15 +149,18 @@
                         'id_usuario' => $idUsuarioActual
                     ]);
                     if ($res2 == true) {
+                        notificaciones('Datos actualizados');
+                        header("refresh:2;url=inicio.php");
                         
-                        header("Location: perfil.php");
                     }
                 }
             } else {
-                echo '<script language="javascript">alert("Datos faltantes");</script>';
+                notificaciones('Datos faltantes');
+                header("refresh:2;url=perfil.php");
             }
         } else {
-            echo '<script language="javascript">alert("Petición inválida");</script>';
+            notificaciones('Petición inválida');
+            header("refresh:2;url=perfil.php");
         }
     }
 

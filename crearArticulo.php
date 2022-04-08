@@ -17,9 +17,9 @@
     if (!isset($_SESSION['usuario'])) {
         header("Location: index.php");
     }
-    $idUsuarioActual=$_SESSION['usuario']['id'];
+    $idUsuarioActual = $_SESSION['usuario']['id'];
     if (isset($_POST['btnCrear'])) {
-        
+
         if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
             //Falta crear función que limpie el texto
             //Falta crear función que limpie el chkPublico
@@ -27,33 +27,44 @@
                 if (isset($_POST['chkPublico'])) {
                     $articulo = Limpieza($_POST['txtMensaje']);
                     $publico = Limpieza($_POST['chkPublico']);
-                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) VALUES(:id_usuario,:texto,:publico)");
-                    $res = $query->execute([
-                       'id_usuario'=>$idUsuarioActual , 
-                       'texto'=>$articulo, 
-                       'publico'=>'SI'
-                    ]);
-                    if ($res == true) {
-                        echo '<script language="javascript">alert("Artículo creado");</script>';
+                    if ($publico == 'on') {
+                        $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
+                                                 VALUES(:id_usuario,:texto,:publico)");
+                        $res = $query->execute([
+                            'id_usuario' => $idUsuarioActual,
+                            'texto' => $articulo,
+                            'publico' => 'SI'
+                        ]);
+                        if ($res == true) {
+                            notificaciones('Artículo creado');
+                            header("refresh:2;url=crearArticulo.php");
+
+                        }
+                    } else {
+                        notificaciones('Artículo no creado');
+                        header("refresh:2;url=crearArticulo.php");
                     }
                 } else {
                     $articulo = Limpieza($_POST['txtMensaje']);
-                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) VALUES(:id_usuario,:texto,:publico)");
+                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
+                                             VALUES(:id_usuario,:texto,:publico)");
                     $res = $query->execute([
-                       'id_usuario'=>$idUsuarioActual , 
-                       'texto'=>$articulo, 
-                       'publico'=>'NO'
+                        'id_usuario' => $idUsuarioActual,
+                        'texto' => $articulo,
+                        'publico' => 'NO'
                     ]);
                     if ($res == true) {
-                        echo '<script language="javascript">alert("Artículo creado");</script>';
+                        notificaciones('Artículo creado');
+                        header("refresh:2;url=crearArticulo.php");
                     }
                 }
-            }
-            else {
-                echo '<script language="javascript">alert("Texto inválido");</script>';
+            } else {
+                notificaciones('Texto inválido');
+                header("refresh:2;url=crearArticulo.php");
             }
         } else {
-            echo '<script language="javascript">alert("Petición inválida");</script>';
+            notificaciones('Petición invalida');
+            header("refresh:2;url=crearArticulo.php");
         }
         anticsrf();
     }
@@ -64,7 +75,7 @@
 
         <h2 class="login-header">Crear artículo</h2>
 
-        <form class="login-container" method="post" >
+        <form class="login-container" method="post">
             <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
             <p><textarea name="txtMensaje" id="txtMensaje" placeholder="Escribir artículo" rows="20" cols="41" maxlength="140"></textarea></p>
             <p>¿Es público?<input type="checkbox" name="chkPublico"></p>
