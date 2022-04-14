@@ -22,24 +22,21 @@
       if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: articulos.php");
       }
- 
     }
     //Boton de perfil
     if (isset($_POST["lnkPerfil"])) {
       if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: perfil.php");
       }
-    
     }
     //Boton de artículos
     if (isset($_POST["lnkMensajes"])) {
       if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: mensajes.php");
       }
-   
     }
   }
- 
+
   ?>
   <!-- partial:index.partial.html -->
   <div class="index">
@@ -52,6 +49,7 @@
         <input type="submit" class="login" name="lnkMensajes" value="Ver mensajes">
 
         <input type="submit" class="login" name="lnkPerfil" value="Mi perfil">
+        <!--//var_dump($_SESSION['usuario']['foto']);-->
       </form>
     </div>
   </div>

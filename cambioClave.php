@@ -75,9 +75,9 @@
 
         <form class="login-container" method="post">
             <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
-            <p><input type="password" name="txtAnterior" id="txtAnterior" placeholder="Clave actual" required="required"></p>
-            <p><input type="password" name="txtNueva" id="txtNueva" placeholder="Nueva clave" required="required"></p>
-            <p><input type="password" name="txtRepetir" id="txtRepetir" placeholder="Repetir clave" required="required"></p>
+            <p><input type="password" name="txtAnterior" id="txtAnterior" placeholder="Clave actual" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$" required="required"></p>
+            <p><input type="password" name="txtNueva" id="txtNueva" placeholder="Nueva clave" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$" required="required"></p>
+            <p><input type="password" name="txtRepetir" id="txtRepetir" placeholder="Repetir clave" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$" required="required"></p>
             <p><input type="submit" name="btnActualizar" value="Actualizar"></p>
         </form>
     </div>

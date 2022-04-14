@@ -15,7 +15,6 @@
     sesionSegura();
     //limpieza de llave valor del $_POST
     LimpiezaKV();
-  
     if (isset($_SESSION['usuario'])) {
         //Botn para ir al inicio 
         if (isset($_POST['lnkHome'])) {
@@ -28,6 +27,7 @@
             header("Location: index.php");
         }
     } else {
+        session_destroy();
         header("Location: index.php");
     }
     
@@ -38,6 +38,17 @@
         <div class="login-header"> 
             <form method="post">
             <input type="submit" name="lnkHome" class="login" value="Inicio">
+            <?php
+                $idUsuarioActual = $_SESSION['usuario']['id'];
+                $query = $conn->prepare("SELECT nombre, foto 
+                FROM usuario WHERE id_usuario=:id_usuario ");
+                $res = $query->execute([
+                'id_usuario' => $idUsuarioActual
+                ]);
+                $datos = $query->fetch(PDO::FETCH_BOTH);
+                $_SESSION['usuario']['nombre'] = $datos[0];
+                $_SESSION['usuario']['foto'] = $datos[1];
+            ?>
             <img name="imgFoto" src="<?php echo $_SESSION['usuario']['foto'] ?>" right="100" width="100">
             <label name="lblNombre"><?php echo $_SESSION['usuario']['nombre'] ?> </label>
             <input type="submit" class="login" name="btnSalir" value="Salir">

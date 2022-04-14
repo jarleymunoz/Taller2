@@ -78,8 +78,8 @@
 
     <form class="login-container" method="post">
       <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
-      <p><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario"></p>
-      <p><input type="password" name="txtClave" id="txtClave" placeholder="Clave"></p>
+      <p><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" pattern="[A-Za-z0-9]+" required="required"></p>
+      <p><input type="password" name="txtClave" id="txtClave" placeholder="Clave" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$" required="required"></p>
       <p><input type="submit" name="btnIngresar" value="Ingresar"></p>
       <p><input type="submit" name="btnRegistrar" value="Registrar"></p>
     </form>

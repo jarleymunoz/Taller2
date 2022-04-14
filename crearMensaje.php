@@ -53,28 +53,31 @@
                 }
                 //guardo el destinatario    
                 $destinatario = Limpieza($_POST['cmbDestino']);
-                //guardo el mensaje
-                $mensaje = Limpieza($_POST['txtMensaje']);
-                //query para insertar el mensaje
-                $query1 = $conn->prepare("INSERT INTO mensaje(id_remite,id_destino,texto,archivo) 
+                if (validarMensaje($_POST['txtMensaje']) == true) {
+                    //guardo el mensaje
+                    $mensaje = Limpieza($_POST['txtMensaje']);
+                    //query para insertar el mensaje
+                    $query1 = $conn->prepare("INSERT INTO mensaje(id_remite,id_destino,texto,archivo) 
                                           VALUES (:id_remite,:id_destino,:texto,:archivo)");
-                $res1 = $query1->execute([
-                    'id_remite' => $idUsuarioActual,
-                    'id_destino' => $destinatario,
-                    'texto' => $mensaje,
-                    'archivo' => $dest_path
-                ]);
-                if ($res1 == true) {
+                    $res1 = $query1->execute([
+                        'id_remite' => $idUsuarioActual,
+                        'id_destino' => $destinatario,
+                        'texto' => $mensaje,
+                        'archivo' => $dest_path
+                    ]);
+                    if ($res1 == true) {
 
-                    notificaciones('Mensaje enviado');
-                    header("refresh:2;url=crearMensaje.php");
-                    
+                        notificaciones('Mensaje enviado');
+                        header("refresh:2;url=crearMensaje.php");
+                    } else {
+                        notificaciones('Error de envío');
+                        header("refresh:2;url=crearMensaje.php");
+                    }
                 } else {
-                    notificaciones('Error de envío');
-                    header("refresh:2;url=crearMensaje.php");
+                    notificaciones('Mensaje inválido');
                 }
             } else {
-                notificaciones('Texto inválido');
+                notificaciones('Usuario no existente o mensaje vacío');
                 header("refresh:2;url=crearMensaje.php");
             }
         } else {

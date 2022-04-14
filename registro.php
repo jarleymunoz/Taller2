@@ -15,9 +15,9 @@
   sesionSegura();
 
   //Boton de volver
-  if (isset($_POST['btnVolver'])) {
+  /*if (isset($_POST['btnVolver'])) {
     header("Location: index.php");
-  }
+  }*/
   //Boton de registrar
   if (isset($_POST["btnRegistrar"])) {
     foreach ($_POST as $key => $value) {
@@ -78,15 +78,25 @@
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
         $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-        $allowedfileExtensions = array('jpg', 'jpeg');
+        $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'gif');
         if (in_array($fileExtension, $allowedfileExtensions)) {
           // directory in which the uploaded file will be moved
           $uploadFileDir = './img/';
           $dest_path = $uploadFileDir . $newFileName;
           if (move_uploaded_file($fileTmpPath, $dest_path)) {
-            $img = imagecreatefromjpeg($dest_path);
-            imagejpeg($img, $dest_path, 100);
-            imagedestroy($img);
+            if ($fileExtension == 'jpeg' || $fileExtension == 'jpg') {
+              $img = imagecreatefromjpeg($dest_path);
+              imagejpeg($img, $dest_path, 100);
+              imagedestroy($img);
+            } else if ($fileExtension == 'png') {
+              $img = imagecreatefrompng($dest_path);
+              imagepng($img, $dest_path, 9);
+              imagedestroy($img);
+            } else if ($fileExtension == 'gif') {
+              $img = imagecreatefromgif($dest_path);
+              imagegif($img, $dest_path, 100);
+              imagedestroy($img);
+            }
           }
         } else {
           notificaciones('Imagen no válida');
@@ -175,24 +185,26 @@
 
     <form class="register-container" method="post" enctype="multipart/form-data">
       <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
-      <p><input type="text" placeholder="Nombre" id="txtNombre" name="txtNombre"></p>
-      <p><input type="text" placeholder="Apellidos" id="txtApellidos" name="txtApellidos"></p>
-      <p><input type="text" placeholder="Correo" id="txtCorreo" name="txtCorreo"></p>
-      <p><input type="text" placeholder="Dirección" id="txtDir" name="txtDir"></p>
-      <p><input type="text" placeholder="Número Hijos" id="txtNumHij" name="txtNumHij"></p>
-      <p><select id="txtEstCivil" name="txtEstCivil">
+      <p><input type="text" placeholder="Nombre" id="txtNombre" name="txtNombre" pattern="[A-Za-z]+" required="required"></p>
+      <p><input type="text" placeholder="Apellidos" id="txtApellidos" name="txtApellidos" pattern="[A-Za-z]+" required="required"></p>
+      <p><input type="email" placeholder="Correo" id="txtCorreo" name="txtCorreo" required="required"></p>
+      <p><input type="text" placeholder="Dirección" id="txtDir" name="txtDir" pattern="[A-Za-z0-9'\.\-\s\,]" required="required"></p>
+      <p><input type="number" placeholder="Número Hijos" id="txtNumHij" name="txtNumHij" pattern="[0-9]+" required="required"></p>
+      <p><select id="txtEstCivil" name="txtEstCivil" required="required">
           <option value="Soltero">Soltero</option>
           <option value="Casado">Casado</option>
           <option value="Otro">Otro</option>
         </select></p>
-      <p>Foto de perfil (jpg,jpeg)
-        <input type="file" name="fulFoto" id="fulFoto">
+      <p>Foto de perfil (jpg,jpeg,png,gif)
+        <input type="file" name="fulFoto" id="fulFoto" required="required">
       </p>
-      <p><input type="text" placeholder="Usuario" id="txtUsuario" name="txtUsuario"></p>
-      <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave"></p>
+      <p><input type="text" placeholder="Usuario" id="txtUsuario" name="txtUsuario" pattern="[A-Za-z0-9]+" required="required"></p>
+      <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave" required="required" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$"></p>
 
       <p><input type="submit" value="Registrar" name="btnRegistrar"></p>
-      <p><input type="submit" value="Volver" name="btnVolver"></p>
+    </form>
+    <form class="register-container" action="index.php">
+      <p><input action="index.php" type="submit" value="Volver" name="btnVolver"></p>
     </form>
   </div>
   <!-- partial -->

@@ -98,21 +98,49 @@ function validarTexto($texto)
     }
 }
 /**
- * Función que recibe una cadena y retorna true si es texto válido
+ * Función que recibe una cadena y retorna true si es texto válido y menor de 140 caracteres
  * @param texto: Recibe la cadena y valida si cumple con el patron de texto 
  */
 function validarArticulo($texto)
 {
-    $tex = trim($texto);
-    if ($tex == "" && trim($tex) == "") {
-        return false;
-    } else {
-        $patron = '/^[a-zA-Z, ]*$/';
-        if (preg_match($patron, $tex)) {
-            return true;
-        } else {
+    if (strlen($texto) <= 140) {
+        $tex = trim($texto);
+        if ($tex == "" && trim($tex) == "") {
             return false;
+        } else {
+            $patron = '/^[a-zA-Z0-9!¡¿?.,*áéíóúÁÉÍÓÚñÑ, ]*$/';
+            if (preg_match($patron, $tex)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+    }else
+    {
+        return false;
+    }
+}
+/**
+ * Función que recibe una cadena y retorna true si es un mensaje válido
+ * @param texto: Recibe la cadena y valida si cumple con el patron de texto 
+ */
+function validarMensaje($texto)
+{
+    if (strlen($texto) <= 140) {
+        $tex = trim($texto);
+        if ($tex == "" && trim($tex) == "") {
+            return false;
+        } else {
+            $patron = '/^[a-zA-Z0-9!¡¿?.,*áéíóúÁÉÍÓÚñÑ, ]*$/';
+            if (preg_match($patron, $tex)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }else
+    {
+        return false;
     }
 }
 /**
@@ -203,7 +231,7 @@ function validarClave($clave)
     if ($cla == "" && trim($cla) == "") {
         return false;
     } else {
-        $patron = '/^[a-zA-Z0-9.*,+,), ]*$/';
+        $patron = '/^[a-zA-Z0-9.+*,), ]*$/';
         if (preg_match($patron, $cla)) {
             return true;
         } else {
@@ -229,6 +257,10 @@ function validarDireccion($direccion)
         }
     }
 }
+/**
+ * Función que recibe una cadena y retorna true si es una direccion
+ * @param tuit: Recibe la cadena y valida si cumple con el patron del tuit
+ */
 function validarTuit($tuit)
 {
     if (strlen($tuit) <= 140) {
@@ -244,9 +276,9 @@ function validarTuit($tuit)
 function notificaciones($notificacion)
 {
 
-    ?>
-    <div><label name="notificacion"> <?php echo $notificacion?></label></div>
-    <?php
-    
+?>
+    <div><label name="notificacion"> <?php echo $notificacion ?></label></div>
+<?php
+
 }
 ?>

@@ -25,37 +25,46 @@
             //Falta crear función que limpie el chkPublico
             if (($_POST['txtMensaje'])) {
                 if (isset($_POST['chkPublico'])) {
-                    $articulo = Limpieza($_POST['txtMensaje']);
-                    $publico = Limpieza($_POST['chkPublico']);
-                    if ($publico == 'on') {
-                        $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
+                    //asigno a artículo
+                    if (validarArticulo($_POST['txtMensaje']) == true) {
+                        $articulo = Limpieza($_POST['txtMensaje']);
+                        $publico = Limpieza($_POST['chkPublico']);
+                        if ($publico == 'on') {
+                            $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
                                                  VALUES(:id_usuario,:texto,:publico)");
+                            $res = $query->execute([
+                                'id_usuario' => $idUsuarioActual,
+                                'texto' => $articulo,
+                                'publico' => 'SI'
+                            ]);
+                            if ($res == true) {
+                                notificaciones('Artículo creado');
+                                header("refresh:2;url=crearArticulo.php");
+                            }
+                        } else {
+                            notificaciones('Artículo no creado');
+                            header("refresh:2;url=crearArticulo.php");
+                        }
+                    } else {
+                        notificaciones('Árticulo inválido');
+                    }
+                } else {
+                    //asigno a artículo
+                    if (validarArticulo($_POST['txtMensaje']) == true) {
+                        $articulo = Limpieza($_POST['txtMensaje']);
+                        $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
+                                             VALUES(:id_usuario,:texto,:publico)");
                         $res = $query->execute([
                             'id_usuario' => $idUsuarioActual,
                             'texto' => $articulo,
-                            'publico' => 'SI'
+                            'publico' => 'NO'
                         ]);
                         if ($res == true) {
                             notificaciones('Artículo creado');
                             header("refresh:2;url=crearArticulo.php");
-
                         }
                     } else {
-                        notificaciones('Artículo no creado');
-                        header("refresh:2;url=crearArticulo.php");
-                    }
-                } else {
-                    $articulo = Limpieza($_POST['txtMensaje']);
-                    $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
-                                             VALUES(:id_usuario,:texto,:publico)");
-                    $res = $query->execute([
-                        'id_usuario' => $idUsuarioActual,
-                        'texto' => $articulo,
-                        'publico' => 'NO'
-                    ]);
-                    if ($res == true) {
-                        notificaciones('Artículo creado');
-                        header("refresh:2;url=crearArticulo.php");
+                        notificaciones('Árticulo inválido');
                     }
                 }
             } else {
