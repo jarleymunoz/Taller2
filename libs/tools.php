@@ -67,7 +67,7 @@ function sesionSegura()
 function cerrarSesion()
 {
     session_destroy();
-    header("Location: index.php");
+    header("refresh:3;url=index.php");
 }
 
 /**
@@ -115,8 +115,7 @@ function validarArticulo($texto)
                 return false;
             }
         }
-    }else
-    {
+    } else {
         return false;
     }
 }
@@ -138,8 +137,7 @@ function validarMensaje($texto)
                 return false;
             }
         }
-    }else
-    {
+    } else {
         return false;
     }
 }
@@ -227,17 +225,31 @@ function validarDocumento($doc)
  */
 function validarClave($clave)
 {
-    $cla = trim($clave);
-    if ($cla == "" && trim($cla) == "") {
+    if(strlen($clave) < 6){
+        notificaciones('La clave debe tener al menos 6 caracteres');
         return false;
-    } else {
-        $patron = '/^[a-zA-Z0-9.+*,), ]*$/';
-        if (preg_match($patron, $cla)) {
-            return true;
-        } else {
-            return false;
-        }
+     }
+     if(strlen($clave) > 16){
+        notificaciones('La clave no puede tener más de 16 caracteres');
+        return false;
+     }
+    if (!preg_match('`[a-z]`', $clave)) {
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        return false;
     }
+    if (!preg_match('`[A-Z]`', $clave)) {
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        return false;
+    }
+    if (!preg_match('`[0-9]`', $clave)) {
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        return false;
+    }
+    if (!preg_match('`[*,+,/,#]`', $clave)) {
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        return false;
+    }
+    return true;
 }
 /**
  * Función que recibe una cadena y retorna true si es una direccion

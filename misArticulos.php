@@ -87,7 +87,7 @@
                 <div class="index input">
                     <form method="post">
                         <br>
-                        <label name="lblTexto_1">Artículo: <?php echo $data->texto; ?> </label>
+                        <label name="lblTexto_1" ><?php echo $data->texto; ?> </label>
                         <br>
                         <label name="lblFecha_1">Fecha publicación: <?php echo $data->fecha_publi; ?> </label>
                         <br>

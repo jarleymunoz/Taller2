@@ -1,0 +1,119 @@
+{
+  "Name": "11 - Validar artículo que no aparezca público",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtUsuario",
+      "Value": "",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "pepe",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtClave",
+      "Value": "",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Targets": [
+        "name=btnIngresar",
+        "xpath=/html/body/div[2]/form/p[4]/input",
+        "xpath=//input[@name='btnIngresar']",
+        "xpath=//p[4]/input",
+        "css=body > div.login > form:nth-child(3) > p:nth-child(4) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=notificacion",
+      "Value": "Datos válidos",
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=lnkArticulos",
+      "Value": "",
+      "Targets": [
+        "name=lnkArticulos",
+        "xpath=/html/body/div[2]/div/form/input",
+        "xpath=//input[@name='lnkArticulos']",
+        "xpath=//div[2]/div/form/input",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(3)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=lnkMisArticulos",
+      "Value": "",
+      "Targets": [
+        "name=lnkMisArticulos",
+        "xpath=/html/body/div[2]/div/form/input[2]",
+        "xpath=//input[@name='lnkMisArticulos']",
+        "xpath=//div[2]/div/form/input[2]",
+        "css=body > div:nth-child(9) > div > form > input:nth-child(3)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementNotPresent",
+      "Target": "xpath=//*[@name=\"lblTexto_1\"]",
+      "Value": "Línea de profundización 2.",
+      "Description": ""
+    }
+  ]
+}

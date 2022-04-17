@@ -191,7 +191,7 @@
 
             <form class="register-container" method="post" enctype="multipart/form-data">
                 <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
-                <p><input type="text" placeholder="Nombre" id="txtNombre" name="txtNombre" pattern="[A-Za-z]+" required="required" value="<?php echo $data->nombre ?>"></p>
+                <p><input type="text" placeholder="Nombre" id="txtNombre" name="txtNombre" value="<?php echo $data->nombre ?>"></p>
                 <p><input type="text" placeholder="Apellidos" id="txtApellidos" name="txtApellidos" pattern="[A-Za-z]+" required="required" value="<?php echo $data->apellido ?>"></p>
                 <p><input type="email" placeholder="Correo" id="txtCorreo" name="txtCorreo" required="required" value="<?php echo $data->correo ?>"></p>
                 <p><input type="text" placeholder="Dirección" id="txtDir" name="txtDir" pattern="[A-Za-z0-9'\.\-\s\,]" required="required" value="<?php echo $data->direccion ?>"></p>

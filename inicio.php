@@ -21,18 +21,27 @@
     if (isset($_POST["lnkArticulos"])) {
       if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: articulos.php");
+      } else {
+        notificaciones('Petición inválida');
+        header("refresh:2;url=inicio.php");
       }
     }
     //Boton de perfil
     if (isset($_POST["lnkPerfil"])) {
       if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: perfil.php");
+      } else {
+        notificaciones('Petición inválida');
+        header("refresh:2;url=inicio.php");
       }
     }
     //Boton de artículos
     if (isset($_POST["lnkMensajes"])) {
       if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: mensajes.php");
+      } else {
+        notificaciones('Petición inválida');
+        header("refresh:2;url=inicio.php");
       }
     }
   }

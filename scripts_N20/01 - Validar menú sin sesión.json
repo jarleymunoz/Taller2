@@ -1,0 +1,38 @@
+{
+  "Name": "01 - Validar menú sin sesión",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Targets": [
+        "name=btnIngresar",
+        "xpath=/html/body/div[2]/form/p[4]/input",
+        "xpath=//input[@name='btnIngresar']",
+        "xpath=//p[4]/input",
+        "css=body > div.login > form > p:nth-child(4) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=btnRegistrar",
+      "Value": "",
+      "Targets": [
+        "name=btnRegistrar",
+        "xpath=/html/body/div[2]/form/p[5]/input",
+        "xpath=//input[@name='btnRegistrar']",
+        "xpath=//p[5]/input",
+        "css=body > div.login > form > p:nth-child(5) > input"
+      ],
+      "Description": ""
+    }
+  ]
+}

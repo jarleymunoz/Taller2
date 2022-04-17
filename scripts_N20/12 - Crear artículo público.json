@@ -1,0 +1,186 @@
+{
+  "Name": "12 - Crear artículo público",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtUsuario",
+      "Value": "",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "pepe",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtClave",
+      "Value": "",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Targets": [
+        "name=btnIngresar",
+        "xpath=/html/body/div[2]/form/p[4]/input",
+        "xpath=//input[@name='btnIngresar']",
+        "xpath=//p[4]/input",
+        "css=body > div.login > form:nth-child(3) > p:nth-child(4) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=notificacion",
+      "Value": "Datos válidos",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=lnkArticulos",
+      "Value": "",
+      "Targets": [
+        "name=lnkArticulos",
+        "xpath=/html/body/div[2]/div/form/input",
+        "xpath=//input[@name='lnkArticulos']",
+        "xpath=//div[2]/div/form/input",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(3)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=lnkCrearArticulo",
+      "Value": "",
+      "Targets": [
+        "name=lnkCrearArticulo",
+        "xpath=/html/body/div[2]/div/form/input[3]",
+        "xpath=//input[@name='lnkCrearArticulo']",
+        "xpath=//input[3]",
+        "css=body > div:nth-child(9) > div > form > input:nth-child(4)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtMensaje",
+      "Value": "",
+      "Targets": [
+        "id=txtMensaje",
+        "name=txtMensaje",
+        "xpath=//*[@id=\"txtMensaje\"]",
+        "xpath=//textarea[@id='txtMensaje']",
+        "xpath=//textarea",
+        "css=#txtMensaje"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtMensaje",
+      "Value": "Artículo es público",
+      "Targets": [
+        "id=txtMensaje",
+        "name=txtMensaje",
+        "xpath=//*[@id=\"txtMensaje\"]",
+        "xpath=//textarea[@id='txtMensaje']",
+        "xpath=//textarea",
+        "css=#txtMensaje"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "name=chkPublico",
+      "Value": "on",
+      "Targets": [
+        "name=chkPublico",
+        "xpath=/html/body/div[3]/form/p[3]/input",
+        "xpath=//input[@name='chkPublico']",
+        "xpath=//p[3]/input",
+        "css=body > div.login > form > p:nth-child(3) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=chkPublico",
+      "Value": "",
+      "Targets": [
+        "name=chkPublico",
+        "xpath=/html/body/div[3]/form/p[3]/input",
+        "xpath=//input[@name='chkPublico']",
+        "xpath=//p[3]/input",
+        "css=body > div.login > form > p:nth-child(3) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=btnCrear",
+      "Value": "",
+      "Targets": [
+        "name=btnCrear",
+        "xpath=/html/body/div[3]/form/p[4]/input",
+        "xpath=//input[@name='btnCrear']",
+        "xpath=//p[4]/input",
+        "css=body > div.login > form > p:nth-child(4) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=notificacion",
+      "Value": "Artículo creado",
+      "Description": ""
+    }
+  ]
+}

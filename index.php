@@ -44,8 +44,9 @@
               $_SESSION['usuario']['nombre'] = $nombre;
               $_SESSION['usuario']['id']     = $id;
               $_SESSION['usuario']['foto']   = $foto;
-
-              header("Location: inicio.php");
+              notificaciones('Datos válidos');
+              header("refresh:2;url=inicio.php");
+              
             } else {
               notificaciones('Clave incorrecta');
             }
@@ -81,6 +82,8 @@
       <p><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" pattern="[A-Za-z0-9]+" required="required"></p>
       <p><input type="password" name="txtClave" id="txtClave" placeholder="Clave" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$" required="required"></p>
       <p><input type="submit" name="btnIngresar" value="Ingresar"></p>
+    </form>
+    <form class="login-container" method="post">
       <p><input type="submit" name="btnRegistrar" value="Registrar"></p>
     </form>
   </div>

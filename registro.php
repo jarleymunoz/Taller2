@@ -15,9 +15,9 @@
   sesionSegura();
 
   //Boton de volver
-  /*if (isset($_POST['btnVolver'])) {
+  if (isset($_POST['btnVolver'])) {
     header("Location: index.php");
-  }*/
+  }
   //Boton de registrar
   if (isset($_POST["btnRegistrar"])) {
     foreach ($_POST as $key => $value) {
@@ -162,17 +162,20 @@
             ]);
             if ($res1 == true) {
               notificaciones('Usuario registrado correctamente');
-              header("refresh:2;url: index.php");
+              header("refresh:1;url: index.php");
             }
           } else {
             notificaciones('Usuario ya existe');
+            header("refresh:2;url: registro.php");
           }
         }
       } else {
         notificaciones('Datos faltantes');
+        header("refresh:2;url: registro.php");
       }
     } else {
       notificaciones('Petición invalida');
+      header("refresh:2;url: registro.php");
     }
   }
 
@@ -199,11 +202,11 @@
         <input type="file" name="fulFoto" id="fulFoto" required="required">
       </p>
       <p><input type="text" placeholder="Usuario" id="txtUsuario" name="txtUsuario" pattern="[A-Za-z0-9]+" required="required"></p>
-      <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave" required="required" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$"></p>
+      <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave" ></p>
 
       <p><input type="submit" value="Registrar" name="btnRegistrar"></p>
     </form>
-    <form class="register-container" action="index.php">
+    <form class="register-container" method="post" enctype="multipart/form-data">
       <p><input action="index.php" type="submit" value="Volver" name="btnVolver"></p>
     </form>
   </div>

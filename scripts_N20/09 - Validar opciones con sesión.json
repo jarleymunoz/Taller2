@@ -1,0 +1,178 @@
+{
+  "Name": "09 - Validar opciones con sesión",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtUsuario",
+      "Value": "",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "pepe",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtClave",
+      "Value": "",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Targets": [
+        "name=btnIngresar",
+        "xpath=/html/body/div[2]/form/p[4]/input",
+        "xpath=//input[@name='btnIngresar']",
+        "xpath=//p[4]/input",
+        "css=body > div.login > form:nth-child(3) > p:nth-child(4) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=notificacion",
+      "Value": "Datos válidos",
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=lnkHome",
+      "Value": "",
+      "Targets": [
+        "name=lnkHome",
+        "xpath=/html/body/div/div/form/input",
+        "xpath=//input[@name='lnkHome']",
+        "xpath=//input",
+        "css=body > div:nth-child(4) > div > form > input:nth-child(1)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=imgFoto",
+      "Value": "",
+      "Targets": [
+        "name=imgFoto",
+        "xpath=/html/body/div/div/form/img",
+        "xpath=//img[@name='imgFoto']",
+        "xpath=//img",
+        "css=body > div:nth-child(4) > div > form > img"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=lblNombre",
+      "Value": "",
+      "Targets": [
+        "name=lblNombre",
+        "xpath=/html/body/div/div/form/label",
+        "xpath=//label[@name='lblNombre']",
+        "xpath=//label",
+        "css=body > div:nth-child(4) > div > form > label"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=btnSalir",
+      "Value": "",
+      "Targets": [
+        "name=btnSalir",
+        "xpath=/html/body/div/div/form/input[2]",
+        "xpath=//input[@name='btnSalir']",
+        "xpath=//input[2]",
+        "css=body > div:nth-child(4) > div > form > input:nth-child(4)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=lnkArticulos",
+      "Value": "",
+      "Targets": [
+        "name=lnkArticulos",
+        "xpath=/html/body/div[2]/div/form/input",
+        "xpath=//input[@name='lnkArticulos']",
+        "xpath=//div[2]/div/form/input",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(3)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=lnkMensajes",
+      "Value": "",
+      "Targets": [
+        "name=lnkMensajes",
+        "xpath=/html/body/div[2]/div/form/input[2]",
+        "xpath=//input[@name='lnkMensajes']",
+        "xpath=//div[2]/div/form/input[2]",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(4)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyElementPresent",
+      "Target": "name=lnkPerfil",
+      "Value": "",
+      "Targets": [
+        "name=lnkPerfil",
+        "xpath=/html/body/div[2]/div/form/input[3]",
+        "xpath=//input[@name='lnkPerfil']",
+        "xpath=//input[3]",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(5)"
+      ],
+      "Description": ""
+    }
+  ]
+}

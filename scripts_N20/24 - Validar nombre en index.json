@@ -1,0 +1,59 @@
+{
+  "Name": "24 - Validar nombre en index",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "maria",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=lblNombre",
+      "Value": "Maria Cecilia ",
+      "Targets": [
+        "name=lblNombre",
+        "xpath=/html/body/div/div/form/label",
+        "xpath=//label[@name='lblNombre']",
+        "xpath=//label",
+        "css=body > div:nth-child(4) > div > form > label"
+      ],
+      "Description": ""
+    }
+  ]
+}

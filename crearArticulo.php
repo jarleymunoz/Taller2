@@ -21,8 +21,6 @@
     if (isset($_POST['btnCrear'])) {
 
         if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
-            //Falta crear función que limpie el texto
-            //Falta crear función que limpie el chkPublico
             if (($_POST['txtMensaje'])) {
                 if (isset($_POST['chkPublico'])) {
                     //asigno a artículo
@@ -46,7 +44,7 @@
                             header("refresh:2;url=crearArticulo.php");
                         }
                     } else {
-                        notificaciones('Árticulo inválido');
+                        notificaciones('Artículo inválido');
                     }
                 } else {
                     //asigno a artículo

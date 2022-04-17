@@ -49,9 +49,8 @@
                         $uploadFileDir = './archivos/';
                         $dest_path = $uploadFileDir . $newFileName;
                         move_uploaded_file($fileTmpPath, $dest_path);
-                    }
-                }
-                //guardo el destinatario    
+
+                        //guardo el destinatario    
                 $destinatario = Limpieza($_POST['cmbDestino']);
                 if (validarMensaje($_POST['txtMensaje']) == true) {
                     //guardo el mensaje
@@ -76,6 +75,11 @@
                 } else {
                     notificaciones('Mensaje inválido');
                 }
+                    }else {
+                        notificaciones('Adjunto inválido');
+                    }
+                }
+                
             } else {
                 notificaciones('Usuario no existente o mensaje vacío');
                 header("refresh:2;url=crearMensaje.php");

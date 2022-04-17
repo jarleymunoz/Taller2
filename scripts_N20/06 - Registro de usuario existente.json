@@ -1,0 +1,208 @@
+{
+  "Name": "06 - Registro de usuario existente",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=btnRegistrar",
+      "Value": "",
+      "Targets": [
+        "name=btnRegistrar",
+        "xpath=/html/body/div[2]/form[2]/p/input",
+        "xpath=//input[@name='btnRegistrar']",
+        "xpath=//form[2]/p/input",
+        "css=body > div.login > form:nth-child(4) > p > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtNombre",
+      "Value": "Pepe",
+      "Targets": [
+        "id=txtNombre",
+        "name=txtNombre",
+        "xpath=//*[@id=\"txtNombre\"]",
+        "xpath=//input[@id='txtNombre']",
+        "xpath=//p[2]/input",
+        "css=#txtNombre"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtApellidos",
+      "Value": "Perez",
+      "Targets": [
+        "id=txtApellidos",
+        "name=txtApellidos",
+        "xpath=//*[@id=\"txtApellidos\"]",
+        "xpath=//input[@id='txtApellidos']",
+        "xpath=//p[3]/input",
+        "css=#txtApellidos"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtCorreo",
+      "Value": "pepe@gmail.com",
+      "Targets": [
+        "id=txtCorreo",
+        "name=txtCorreo",
+        "xpath=//*[@id=\"txtCorreo\"]",
+        "xpath=//input[@id='txtCorreo']",
+        "xpath=//p[4]/input",
+        "css=#txtCorreo"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtDir",
+      "Value": "carera12344 ",
+      "Targets": [
+        "id=txtDir",
+        "name=txtDir",
+        "xpath=//*[@id=\"txtDir\"]",
+        "xpath=//input[@id='txtDir']",
+        "xpath=//p[5]/input",
+        "css=#txtDir"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtNumHij",
+      "Value": "2",
+      "Targets": [
+        "id=txtNumHij",
+        "name=txtNumHij",
+        "xpath=//*[@id=\"txtNumHij\"]",
+        "xpath=//input[@id='txtNumHij']",
+        "xpath=//p[6]/input",
+        "css=#txtNumHij"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtEstCivil",
+      "Value": "",
+      "Targets": [
+        "id=txtEstCivil",
+        "name=txtEstCivil",
+        "xpath=//*[@id=\"txtEstCivil\"]",
+        "xpath=//select[@id='txtEstCivil']",
+        "xpath=//select",
+        "css=#txtEstCivil"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "select",
+      "Target": "id=txtEstCivil",
+      "Value": "label=Casado",
+      "Targets": [
+        "id=txtEstCivil",
+        "name=txtEstCivil",
+        "xpath=//*[@id=\"txtEstCivil\"]",
+        "xpath=//select[@id='txtEstCivil']",
+        "xpath=//select",
+        "css=#txtEstCivil"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"txtEstCivil\"]/option[2]",
+      "Value": "",
+      "Targets": [
+        "xpath=//*[@id=\"txtEstCivil\"]/option[2]",
+        "xpath=//option[@value='Casado']",
+        "xpath=//option[2]",
+        "css=#txtEstCivil > option:nth-child(2)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "XClick",
+      "Target": "id=fulFoto",
+      "Value": "",
+      "Targets": [
+        "id=fulFoto",
+        "name=fulFoto",
+        "xpath=//*[@id=\"fulFoto\"]",
+        "xpath=//input[@id='fulFoto']",
+        "xpath=//p[8]/input",
+        "css=#fulFoto"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "XType",
+      "Target": "C:\\tmp\\tmp.jpg",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "XType",
+      "Target": "${KEY_ENTER}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "pepe",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[9]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[10]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=btnRegistrar",
+      "Value": "",
+      "Targets": [
+        "name=btnRegistrar",
+        "xpath=/html/body/div/form/p[11]/input",
+        "xpath=//input[@name='btnRegistrar']",
+        "xpath=//p[11]/input",
+        "css=body > div > form > p:nth-child(11) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=notificacion",
+      "Value": "Usuario ya existe",
+      "Description": ""
+    }
+  ]
+}

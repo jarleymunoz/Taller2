@@ -1,0 +1,134 @@
+{
+  "Name": "25 - Actualizar clave",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "maria",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Targets": [
+        "name=btnIngresar",
+        "xpath=/html/body/div[2]/form/p[4]/input",
+        "xpath=//input[@name='btnIngresar']",
+        "xpath=//p[4]/input",
+        "css=body > div.login > form:nth-child(3) > p:nth-child(4) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=lnkPerfil",
+      "Value": "",
+      "Targets": [
+        "name=lnkPerfil",
+        "xpath=/html/body/div[2]/div/form/input[3]",
+        "xpath=//input[@name='lnkPerfil']",
+        "xpath=//input[3]",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(5)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=btnCambio",
+      "Value": "",
+      "Targets": [
+        "name=btnCambio",
+        "xpath=/html/body/div[2]/form/p[10]/input",
+        "xpath=//input[@name='btnCambio']",
+        "xpath=//p[10]/input",
+        "css=body > div.login > form > p:nth-child(10) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtAnterior",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtAnterior",
+        "name=txtAnterior",
+        "xpath=//*[@id=\"txtAnterior\"]",
+        "xpath=//input[@id='txtAnterior']",
+        "xpath=//p[2]/input",
+        "css=#txtAnterior"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtNueva",
+      "Value": "*123Abc+",
+      "Targets": [
+        "id=txtNueva",
+        "name=txtNueva",
+        "xpath=//*[@id=\"txtNueva\"]",
+        "xpath=//input[@id='txtNueva']",
+        "xpath=//p[3]/input",
+        "css=#txtNueva"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtRepetir",
+      "Value": "*123Abc+",
+      "Targets": [
+        "id=txtRepetir",
+        "name=txtRepetir",
+        "xpath=//*[@id=\"txtRepetir\"]",
+        "xpath=//input[@id='txtRepetir']",
+        "xpath=//p[4]/input",
+        "css=#txtRepetir"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=btnActualizar",
+      "Value": "",
+      "Targets": [
+        "name=btnActualizar",
+        "xpath=/html/body/div[2]/form/p[5]/input",
+        "xpath=//input[@name='btnActualizar']",
+        "xpath=//p[5]/input",
+        "css=body > div.login > form > p:nth-child(5) > input"
+      ],
+      "Description": ""
+    }
+  ]
+}

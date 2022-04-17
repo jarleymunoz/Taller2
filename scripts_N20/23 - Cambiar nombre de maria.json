@@ -1,0 +1,106 @@
+{
+  "Name": "23 - Cambiar nombre de maria",
+  "CreationDate": "2022-4-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "http://localhost/Taller2/index.php",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtUsuario",
+      "Value": "maria",
+      "Targets": [
+        "id=txtUsuario",
+        "name=txtUsuario",
+        "xpath=//*[@id=\"txtUsuario\"]",
+        "xpath=//input[@id='txtUsuario']",
+        "xpath=//p[2]/input",
+        "css=#txtUsuario"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtClave",
+      "Value": "*Abc123+",
+      "Targets": [
+        "id=txtClave",
+        "name=txtClave",
+        "xpath=//*[@id=\"txtClave\"]",
+        "xpath=//input[@id='txtClave']",
+        "xpath=//p[3]/input",
+        "css=#txtClave"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "name=btnIngresar",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=lnkPerfil",
+      "Value": "",
+      "Targets": [
+        "name=lnkPerfil",
+        "xpath=/html/body/div[2]/div/form/input[3]",
+        "xpath=//input[@name='lnkPerfil']",
+        "xpath=//input[3]",
+        "css=body > div:nth-child(6) > div > form > input:nth-child(5)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=txtNombre",
+      "Value": "",
+      "Targets": [
+        "id=txtNombre",
+        "name=txtNombre",
+        "xpath=//*[@id=\"txtNombre\"]",
+        "xpath=//input[@id='txtNombre']",
+        "xpath=//p[2]/input",
+        "css=#txtNombre"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=txtNombre",
+      "Value": "Maria Cecilia",
+      "Targets": [
+        "id=txtNombre",
+        "name=txtNombre",
+        "xpath=//*[@id=\"txtNombre\"]",
+        "xpath=//input[@id='txtNombre']",
+        "xpath=//p[2]/input",
+        "css=#txtNombre"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=btnActualizar",
+      "Value": "",
+      "Targets": [
+        "name=btnActualizar",
+        "xpath=/html/body/div[2]/form/p[9]/input",
+        "xpath=//input[@name='btnActualizar']",
+        "xpath=//p[9]/input",
+        "css=body > div.login > form > p:nth-child(9) > input"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "verifyText",
+      "Target": "name=notificacion",
+      "Value": "Datos actualizados",
+      "Description": ""
+    }
+  ]
+}
