@@ -13,7 +13,7 @@
     require "encabezado.php";
     require "encabezadoArticulos.php";
     LimpiezaKV();
-
+    $conn=conexion();
     if (!isset($_SESSION['usuario'])) {
         header("Location: index.php");
     }

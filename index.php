@@ -14,6 +14,7 @@
   require "libs/conexion.php";
   sesionSegura();
   LimpiezaKV();
+  $conn=conexion();
   //Botón de Ingresar
   if (isset($_POST["btnIngresar"])) {
     

@@ -13,6 +13,7 @@
   require "libs/conexion.php";
   require "encabezado.php";
   LimpiezaKV();
+  $conn=conexion();
   //si no existe la sesión va al index,
   if (!isset($_SESSION['usuario'])) {
     header("Location: index.php");

@@ -1,16 +1,18 @@
 <?php
-$server='localhost';
-$username='root';
-$password='123456';//cambio clave
-$database='N20';
+/**
+ * Función que retorna la cadena de conexión a la base de datos.
+ */
+function conexion()
+{
+    $server = 'localhost';
+    $username = 'root';
+    $password = '123456'; //cambio clave
+    $database = 'N20';
 
-//Comentario de prueba
-
-try{
-    $conn=new PDO("mysql:host=$server;dbname=$database;",$username,$password);
-    
-}catch(PDOException $e){
-    echo '<script language="javascript">alert("Conexión a base de datos fallida");</script>';
+    try {
+        $con = new PDO("mysql:host=$server;dbname=$database;", $username, $password);
+        return $con;
+    } catch (PDOException $e) {
+        echo "Conexión a base de datos fallida";
+    }
 }
-
-?>

@@ -1,4 +1,28 @@
 <?php
+//require_once '../vendor/autoload.php'; //libreria de composer
+use Firebase\JWT\JWT; //libreria de jwt
+/**
+ * Función que retorna el usuario actual con inicio de sesión con token
+ */
+function usuarioActual()
+{
+    $jwt = $_SERVER['HTTP_AUTHORIZATION'];
+    $key = 'my_secret_key';
+    
+    if (substr($jwt, 0, 6) === "Bearer") {
+        $jwt = str_replace("Bearer", "", $jwt);
+        try {
+            $data = JWT::decode($jwt,$key, array('HS256'));
+            $datos = $data->data;
+            return $datos->usuario;
+        } catch (\Throwable $th) {
+            echo 'error jumm'. $th;
+            return '';
+        }
+    } 
+        return '';
+    
+}
 
 /**
  * Función que limpia la llave valor del metodo _POST
@@ -225,28 +249,28 @@ function validarDocumento($doc)
  */
 function validarClave($clave)
 {
-    if(strlen($clave) < 6){
-        notificaciones('La clave debe tener al menos 6 caracteres');
+    if (strlen($clave) < 6) {
+        echo 'La clave debe tener al menos 6 caracteres';
         return false;
-     }
-     if(strlen($clave) > 16){
-        notificaciones('La clave no puede tener más de 16 caracteres');
+    }
+    if (strlen($clave) > 16) {
+        echo 'La clave no puede tener más de 16 caracteres';
         return false;
-     }
+    }
     if (!preg_match('`[a-z]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
         return false;
     }
     if (!preg_match('`[A-Z]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
         return false;
     }
     if (!preg_match('`[0-9]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
         return false;
     }
     if (!preg_match('`[*,+,/,#]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
         return false;
     }
     return true;
@@ -282,7 +306,7 @@ function validarTuit($tuit)
     }
 }
 /**
- * Función que muestra las notificaciones al usuario
+ * Función que muestra las echo al usuario
  * @param notificacion: Mensaje para mostrar.
  */
 function notificaciones($notificacion)
@@ -293,4 +317,5 @@ function notificaciones($notificacion)
 <?php
 
 }
+
 ?>

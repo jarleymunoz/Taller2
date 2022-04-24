@@ -10,11 +10,12 @@
 
 <body>
     <?php
-    require "libs/tools.php";
-    require "libs/conexion.php";
+    require_once "libs/tools.php";
+    require_once "libs/conexion.php";
     sesionSegura();
     //limpieza de llave valor del $_POST
     LimpiezaKV();
+    $conn=conexion();
     if (isset($_SESSION['usuario'])) {
         //Botn para ir al inicio 
         if (isset($_POST['lnkHome'])) {

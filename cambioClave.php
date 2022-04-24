@@ -14,6 +14,7 @@
     if (!isset($_SESSION['usuario'])) {
         header("Location: index.php");
     }
+    
     $idUsuarioActual = $_SESSION['usuario']['id'];
 
     $query = $conn->prepare("SELECT clave 
