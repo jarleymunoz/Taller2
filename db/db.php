@@ -1,6 +1,7 @@
 <?php
 require_once "../libs/conexion.php";
 require_once "../libs/tools.php";
+
 /**
  *Función que retorna toda la lista de articulos de un usuario puntual
  *@param id: Id del usuario. 
@@ -90,11 +91,11 @@ function buscarIdUsuario($usuario)
         'usuario' => $usuario
     ]);
     if ($res == true) {
-        $usuar= $query->fetchAll(PDO::FETCH_OBJ);
+        $usuar = $query->fetchAll(PDO::FETCH_OBJ);
         foreach ($usuar as $data) {
             $id = $data->id_usuario;
-        return $id;
-          }
+            return $id;
+        }
     }
 }
 
@@ -156,42 +157,104 @@ function registroUsuario($nombre, $apellido, $correo, $direccion, $hijos, $estad
 function crearArticulo($usuario, $texto, $publico)
 {
     $conn = conexion();
-    $idUsuario=buscarIdUsuario($usuario);
+    $idUsuario = buscarIdUsuario($usuario);
 
     if ($publico == 'SI') {
         $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
                                  VALUES(:id_usuario,:texto,:publico)");
-                            $res = $query->execute([
-                                'id_usuario' => $idUsuario,
-                                'texto' => $texto,
-                                'publico' => 'SI'
-                            ]);
-                            if ($res == true) {
-                                return true;
-                            }else{
-                                return false;
-                            }
-
+        $res = $query->execute([
+            'id_usuario' => $idUsuario,
+            'texto' => $texto,
+            'publico' => 'SI'
+        ]);
+        if ($res == true) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
         $query = $conn->prepare("INSERT INTO articulo (id_usuario, texto, publico) 
                                  VALUES(:id_usuario,:texto,:publico)");
-                            $res = $query->execute([
-                                'id_usuario' => $idUsuario,
-                                'texto' => $texto,
-                                'publico' => 'NO'
-                            ]);
-                            if ($res == true) {
-                                return true;
-                            }else{
-                                return false;
-                            }
+        $res = $query->execute([
+            'id_usuario' => $idUsuario,
+            'texto' => $texto,
+            'publico' => 'NO'
+        ]);
+        if ($res == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 /**
  * Función para verificar el estado de un artículo
  * @param: id_articulo
  */
-function estadoArticulo($id_articulo){
+function estadoArticulo($id_articulo)
+{
+    $con = conexion();
+    $query = $con->prepare("SELECT publico
+                            FROM articulo
+                            WHERE id_articulo =:id_articulo 
+                            ");
+    $res = $query->execute([
+        'id_articulo' => $id_articulo
+    ]);
+    if ($res == true) {
+        $articulo = $query->fetchAll(PDO::FETCH_OBJ);
+        foreach ($articulo as $data) {
+            $publico = $data->publico;
+            return $publico;
+        }
+    }
+}
+/**
+ * Función para publicar o despublicar un artículo
+ * @param: id_articulo: id del artículo a modificar
+ * @param: publico:     SI para publicar NO para despublicar
+ */
+function actualizarEstadoArticulo($id_articulo, $publico)
+{
+    $conn = conexion();
+    $estadoArticulo = estadoArticulo($id_articulo); //Busco el estado actual del articulo
+
+    if ($publico == 'SI' && $estadoArticulo == 'NO') {
+        $query = $conn->prepare("UPDATE articulo 
+        SET publico= 'SI' 
+        WHERE id_articulo=:id_articulo");
+        $res = $query->execute([
+            'id_articulo' => $id_articulo
+        ]);
+        if ($res == true) {
+            return true;
+        }
+    } elseif ($publico == 'NO' && $estadoArticulo == 'SI') {
+        $query = $conn->prepare("UPDATE articulo 
+        SET publico= 'NO' 
+        WHERE id_articulo=:id_articulo");
+        $res = $query->execute([
+            'id_articulo' => $id_articulo
+        ]);
+        if ($res == true) {
+            return true;
+        }
+    } elseif ($estadoArticulo == 'SI' && $publico == 'SI') {
+        echo 'El artículo ya está público';
+        return false;
+    } else {
+    }
+    if ($estadoArticulo == 'NO' && $publico == 'NO') {
+        echo 'El artículo ya está NO público';
+        return false;
+    }
+}
+/**
+ * Función que retorna el id de un artículo en la base de datos
+ * @param: id_articulo: Nombre de usuario a buscar
+ */
+function buscarIdArticulo($id_articulo)
+{
     $con = conexion();
     $query = $con->prepare("SELECT id_articulo
                             FROM articulo
@@ -201,19 +264,33 @@ function estadoArticulo($id_articulo){
         'id_articulo' => $id_articulo
     ]);
     if ($res == true) {
-        $articulo= $query->fetchAll(PDO::FETCH_OBJ);
+        $articulo = $query->fetchAll(PDO::FETCH_OBJ);
         foreach ($articulo as $data) {
             $id = $data->id_articulo;
-        return $id;
-          }
+            return $id;
+        }
     }
 }
 /**
- * Función para publicar o despublicar un artículo
- * @param: id_articulo: id del artículo a modificar
- * @param: publico:     SI para publicar NO para despublicar
-  */
-function actualizarEstadoArticulo($id_articulo,$publico){
-    $estadoArticulo=estadoArticulo($id_articulo);
-    
+ * Función que elimina un artículo
+ * @param: id_articulo:  Id del artículo a eliminar
+ */
+function eliminarArticulo($id_articulo)
+{
+    $conn = conexion();
+    if (buscarIdArticulo($id_articulo)) {
+        $query = $conn->prepare("DELETE FROM articulo 
+                                 WHERE id_articulo=:id_articulo");
+        $res = $query->execute([
+            'id_articulo' => $id_articulo
+        ]);
+        if ($res == true) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        echo 'Artículo no existe';
+        return false;
+    }
 }
