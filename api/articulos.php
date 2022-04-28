@@ -7,14 +7,14 @@ use Firebase\JWT\JWT; //libreria de jwt
 
 $key = 'my_secret_key';
 $time = time();
-/*if (usuarioActual() == '') {
+
+if (usuarioActual() == '') {
     echo 'Acceso no autorizado';
     http_response_code(401);
     exit();
-}*/
+}
 //Obtener los articulos de un usuario
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
     $id = -1;
     if (isset($_GET['id_usuario'])) {
         $id = $_GET['id_usuario'];
@@ -26,23 +26,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 //Creación de un artículo
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $articulo = Limpieza($_POST['txtMensaje']);
-    $publico = Limpieza($_POST['chkPublico']);
-
-    if (validarArticulo($articulo)) {
-    } else {
-        echo 'Artículo inválido';
-        $articulo = "";
+    $articulo = '';
+    $publico = '';
+    if (isset($_POST['txtMensaje'])) {
+        $articulo = Limpieza($_POST['txtMensaje']);
+        if (validarArticulo($articulo)) {
+        } else {
+            echo 'Artículo inválido';
+            $articulo = "";
+        }
     }
-    $estados = ['SI', 'NO'];
-    if (in_array($publico, $estados)) {
-    } else {
-        echo 'Estado del artículo inválido';
-        $publico = "";
+    if (isset($_POST['chkPublico'])) {
+        $publico = Limpieza($_POST['chkPublico']);
+        $estados = ['SI', 'NO'];
+        if (in_array($publico, $estados)) {
+        } else {
+            echo 'Estado del artículo inválido';
+            $publico = "";
+        }
     }
-
     if ($articulo != "" && $publico != "") {
-        if (crearArticulo(/*usuarioActual()*/'Nenfer2022', $articulo, $publico)) {
+        if (crearArticulo(usuarioActual(), $articulo, $publico)) {
             echo 'Artículo creado';
             header("HTTP/1.1 200 OK");
             exit();
@@ -60,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 //Modificación del estado publicado de un artículo por su ID
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    
+
     if (isset($_GET['id_articulo']) && isset($_GET['publico'])) {
-       
+
         $id_articulo = Limpieza($_GET['id_articulo']);
         $publico = Limpieza($_GET['publico']);
         $estados = ['SI', 'NO'];
@@ -86,11 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 //Eliminación de un articulo por su ID
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    
+
     if (isset($_GET['id_articulo'])) {
-       
+
         $id_articulo = Limpieza($_GET['id_articulo']);
-        if (is_numeric($id_articulo) ) {
+        if (is_numeric($id_articulo)) {
             if (eliminarArticulo($id_articulo)) {
                 echo 'Artículo eliminado';
                 header("HTTP/1.1 200 OK");

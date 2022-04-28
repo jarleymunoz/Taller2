@@ -1,5 +1,5 @@
 <?php
-//require_once '../vendor/autoload.php'; //libreria de composer
+require_once '../vendor/autoload.php'; //libreria de composer
 use Firebase\JWT\JWT; //libreria de jwt
 /**
  * Función que retorna el usuario actual con inicio de sesión con token
@@ -8,15 +8,15 @@ function usuarioActual()
 {
     $jwt = $_SERVER['HTTP_AUTHORIZATION'];
     $key = 'my_secret_key';
-    
     if (substr($jwt, 0, 6) === "Bearer") {
-        $jwt = str_replace("Bearer", "", $jwt);
+        $jwt = str_replace("Bearer ", "", $jwt);
+        
         try {
             $data = JWT::decode($jwt,$key, array('HS256'));
             $datos = $data->data;
             return $datos->usuario;
         } catch (\Throwable $th) {
-            echo 'error jumm'. $th;
+            echo 'error: ';
             return '';
         }
     } 
@@ -285,7 +285,7 @@ function validarDireccion($direccion)
     if ($cla == "" && trim($cla) == "") {
         return false;
     } else {
-        $patron = '/^[a-zA-Z0-9, ]*$/';
+        $patron = '/^[a-zA-Z0-9 # - ]*$/';
         if (preg_match($patron, $cla)) {
             return true;
         } else {
@@ -316,6 +316,27 @@ function notificaciones($notificacion)
     <div><label name="notificacion"> <?php echo $notificacion ?></label></div>
 <?php
 
+}
+/**
+ * Función para decodificar una imagen enviada desde el servidor
+ * @param: base64_string: Cadena en base 64 del archivo
+ * @param: output_file: Ruta donde se aloja la imagen
+ */
+function base64_to_jpeg($base64_string, $output_file) {
+    // open the output file for writing
+    $ifp = fopen( $output_file, 'wb' ); 
+
+    // split the string on commas
+    // $data[ 0 ] == "data:image/png;base64"
+    // $data[ 1 ] == <actual base64 string>
+    $data = explode( ',', $base64_string );
+
+    // we could add validation here with ensuring count( $data ) > 1
+    fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+    // clean up the file resource
+    fclose( $ifp ); 
+    return $output_file; 
 }
 
 ?>

@@ -294,3 +294,99 @@ function eliminarArticulo($id_articulo)
         return false;
     }
 }
+/**
+ * Funcion para enviar un mensaje a otro destinatario
+ * @param: remitente: Usuario que envía el mensaje
+ * @param: destinatario: Usuario al que envía el mensaje
+ * @param: mensaje: Cuerpo del mensaje
+ * @param: adjunto: Archivo a enviar
+ * 
+ */
+function enviarMensaje($remitente, $destinatario, $mensaje, $adjunto)
+{
+    $idRemite = buscarIdUsuario($remitente);
+    $idDestino = buscarIdUsuario($destinatario);
+    $conn = conexion();
+    $query = $conn->prepare("INSERT INTO mensaje(id_remite,id_destino,texto,archivo) 
+                             VALUES (:id_remite,:id_destino,:texto,:archivo)");
+    $res = $query->execute([
+        'id_remite' => $idRemite,
+        'id_destino' => $idDestino,
+        'texto' => $mensaje,
+        'archivo' => $adjunto
+    ]);
+    if ($res == true) {
+        return true;
+    } else {
+        return false;
+    }
+}
+/**
+ * Función para actualizar datos del usuario
+ * @param: campoCambiar: campo de la tabla usuario que se modifica.
+ * @param: valor:        valor de a inserar
+ * @param: usuario:      Usuario para modificar 
+ */
+function actualizarUsuario($campo, $valor, $usuario)
+{
+    $conn = conexion();
+    $query = $conn->prepare("UPDATE usuario set $campo=:valor
+                             WHERE usuario=:usuario");
+    $res = $query->execute([
+        'valor' => $valor,
+        'usuario' => $usuario,
+        
+    ]);
+    if ($res == true) {
+        return true;
+    } else {
+        return false;
+    }                         
+}
+/**
+ * Función que actualiza la clave
+ * @param: claveAnterior: clave actual del usuario
+ * @param: claveNueva:    clave nueva para actualizar 
+ * @param: claveRepetir:  clave nueva para confirmar
+ * @param: usuario:       Usuario actual para el cambio   
+ */
+function actualizaClave($claveAnterior,$claveNueva,$claveRepetir,$usuario){
+    $conn = conexion(); 
+    $id_usuario=buscarIdUsuario($usuario);
+    //busco la clave actual
+    $query = $conn->prepare("SELECT clave 
+                             FROM usuario 
+                             WHERE id_usuario=:id_usuario ");
+    $res = $query->execute([
+        'id_usuario' => $id_usuario
+    ]);
+
+    if ($res == true) {
+        $usua = $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    foreach ($usua as $data) {
+        if (password_verify($claveAnterior, $data->clave)) {
+            if ($claveNueva == $claveRepetir) {
+                $query1 = $conn->prepare("UPDATE usuario 
+                                          SET clave=:clave 
+                                          WHERE id_usuario=:id_usuario");
+                $claveNuevaHash =  password_hash($claveNueva, PASSWORD_DEFAULT);
+                $res1 = $query1->execute([
+                    'clave' => $claveNuevaHash,
+                    'id_usuario' => $id_usuario
+                ]);
+                if ($res1 == true) {
+                    return true;
+                }
+            } else {
+                echo 'Las claves no coinciden';
+                return false;
+            }
+        } else {
+            echo 'Clave anterior no coincide';
+            return false;
+        }
+    }
+
+}
