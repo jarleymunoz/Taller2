@@ -13,6 +13,7 @@
   require "libs/tools.php";
   require "libs/conexion.php";
   sesionSegura();
+  $conn=conexion();
 
   //Boton de volver
   if (isset($_POST['btnVolver'])) {

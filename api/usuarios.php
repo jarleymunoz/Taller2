@@ -16,6 +16,8 @@ if (usuarioActual() == '') {
 
 //Actualizacion de datos del usuario excepto usuario y clave
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    $_PUT=array();
+    parse_str(file_get_contents('php://input'),$_PUT);
     $ok = false;
     if (isset($_GET['nombre'])) {
         $nombre = Limpieza($_GET['nombre']);
@@ -78,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             exit();
         }
     }
-    if (isset($_GET['foto'])) {
-        $imagen = Limpieza($_GET['foto']);
+    if (isset($_PUT['foto'])) {
+        $imagen = Limpieza($_PUT['foto']);
         $ruta = '../img/imagen_base64.jpg';
         $imagen = base64_to_jpeg($imagen, $ruta);
         $ok = actualizarUsuario('foto', $imagen, usuarioActual());

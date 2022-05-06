@@ -1,5 +1,5 @@
 <?php
-require_once '../vendor/autoload.php'; //libreria de composer
+//require_once '../vendor/autoload.php'; //libreria de composer
 use Firebase\JWT\JWT; //libreria de jwt
 /**
  * Función que retorna el usuario actual con inicio de sesión con token
@@ -258,19 +258,19 @@ function validarClave($clave)
         return false;
     }
     if (!preg_match('`[a-z]`', $clave)) {
-        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
     if (!preg_match('`[A-Z]`', $clave)) {
-        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
     if (!preg_match('`[0-9]`', $clave)) {
-        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
     if (!preg_match('`[*,+,/,#]`', $clave)) {
-        echo 'La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
+        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
     return true;
