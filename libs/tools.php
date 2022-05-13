@@ -69,7 +69,7 @@ function sesionSegura()
     $path = $cookieParams["path"];
 
     //inicio y control de la sesion
-    $secure = false;
+    $secure = true;
     $httpOnly = true;
     $sameSite = 'strict';
 
