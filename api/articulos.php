@@ -13,15 +13,17 @@ if (usuarioActual() == '') {
     http_response_code(401);
     exit();
 }
-//Obtener los articulos de un usuario
+//ver artículos del usuario
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $id = -1;
-    if (isset($_GET['id_usuario'])) {
-        $id = $_GET['id_usuario'];
-    }
-    $datos = misArticulos($id);
-    header("HTTP/1.1 200 OK");
-    echo json_encode($datos);
+    $id_usuario = buscarIdUsuario(usuarioActual());
+    $misArticulos = ValidarMisArticulos($id_usuario);
+    if ($misArticulos == 'error') {
+        echo 'Error buscando artículos';
+        http_response_code(401);
+        exit();
+    } else
+        header("HTTP/1.1 200 OK");
+    echo json_encode($misArticulos);
 }
 
 //Creación de un artículo
@@ -66,11 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
     if (isset($_GET['id_articulo']) && isset($_GET['publico'])) {
-
         $id_articulo = Limpieza($_GET['id_articulo']);
         $publico = Limpieza($_GET['publico']);
         $estados = ['SI', 'NO'];
-        if (is_numeric($id_articulo) && in_array($publico, $estados)) {
+        //anoto el usuario del articulo
+        $id_usuario_articulo = idUsuarioArticulo($id_articulo);
+        //comparo
+
+        if (is_numeric($id_articulo) && in_array($publico, $estados) && $id_usuario_articulo == buscarIdUsuario(usuarioActual())) {
             if (actualizarEstadoArticulo($id_articulo, $publico)) {
                 echo 'Artículo modificado';
                 header("HTTP/1.1 200 OK");
@@ -94,7 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if (isset($_GET['id_articulo'])) {
 
         $id_articulo = Limpieza($_GET['id_articulo']);
-        if (is_numeric($id_articulo)) {
+        $id_usuario_articulo = idUsuarioArticulo($id_articulo);
+        if (is_numeric($id_articulo) && $id_usuario_articulo == buscarIdUsuario(usuarioActual())) {
             if (eliminarArticulo($id_articulo)) {
                 echo 'Artículo eliminado';
                 header("HTTP/1.1 200 OK");

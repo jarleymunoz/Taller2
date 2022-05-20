@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $_PUT=array();
     parse_str(file_get_contents('php://input'),$_PUT);
     $ok = false;
-    if (isset($_GET['nombre'])) {
-        $nombre = Limpieza($_GET['nombre']);
+    if (isset($_PUT['nombre'])) {
+        $nombre = Limpieza($_PUT['nombre']);
         if (validarTexto($nombre)) {
             $ok = actualizarUsuario('nombre', $nombre, usuarioActual());
         } else {
@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             exit();
         }
     }
-    if (isset($_GET['apellido'])) {
-        $apellido = limpieza($_GET['apellido']);
+    if (isset($_PUT['apellido'])) {
+        $apellido = limpieza($_PUT['apellido']);
         if (validarTexto($apellido)) {
             $ok = actualizarUsuario('apellido', $apellido, usuarioActual());
         } else {
@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             exit();
         }
     }
-    if (isset($_GET['correo'])) {
-        $correo = limpieza($_GET['correo']);
+    if (isset($_PUT['correo'])) {
+        $correo = limpieza($_PUT['correo']);
         if (validarCorreo($correo)) {
             $ok = actualizarUsuario('correo', $correo, usuarioActual());
         } else {
@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             exit();
         }
     }
-    if (isset($_GET['direccion'])) {
-        $direccion = limpieza($_GET['direccion']);
+    if (isset($_PUT['direccion'])) {
+        $direccion = limpieza($_PUT['direccion']);
         if (validarDireccion($direccion)) {
             $ok = actualizarUsuario('direccion', $direccion, usuarioActual());
         } else {
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             exit();
         }
     }
-    if (isset($_GET['num_hijos'])) {
-        $num_hijos = limpieza($_GET['num_hijos']);
+    if (isset($_PUT['num_hijos'])) {
+        $num_hijos = limpieza($_PUT['num_hijos']);
         if (is_numeric($num_hijos)) {
             $ok = actualizarUsuario('num_hijos', $num_hijos, usuarioActual());
         } else {
@@ -69,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             exit();
         }
     }
-    if (isset($_GET['estado_civil'])) {
-        $estado_civil = limpieza($_GET['estado_civil']);
+    if (isset($_PUT['estado_civil'])) {
+        $estado_civil = limpieza($_PUT['estado_civil']);
         $estados = ['Soltero', 'Casado', 'Otro'];
         if (in_array($estado_civil, $estados)) {
             $ok = actualizarUsuario('estado_civil', $estado_civil, usuarioActual());
@@ -89,6 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if ($ok) {
         echo 'Datos de usuario actualizado: ' . usuarioActual();
         header("HTTP/1.1 200 OK");
+        exit();
+    } else {
+        echo 'Error al actualizar';
+        http_response_code(401);
         exit();
     }
 }

@@ -14,12 +14,12 @@
   require "libs/conexion.php";
   sesionSegura();
   LimpiezaKV();
-  $conn=conexion();
-  
+  $conn = conexion();
+
   //Botón de Ingresar
   if (isset($_POST["btnIngresar"])) {
-    
-    if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] || '0000' == $_POST['anticsrf'] ) {
+
+    if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] || '0000' == $_POST['anticsrf']) {
       if (validarUsuario($_POST['txtUsuario']) == true && validarClave($_POST['txtClave']) == true) {
         $usuario = Limpieza($_POST["txtUsuario"]);
         $clave = Limpieza($_POST["txtClave"]);
@@ -28,7 +28,7 @@
                                  FROM usuario 
                                  WHERE usuario =:usuario");
         $res = $query->execute([
-          'usuario'=>$usuario
+          'usuario' => $usuario
         ]);
         if ($res == true) {
           $usuar = $query->fetchAll(PDO::FETCH_OBJ);
@@ -48,7 +48,6 @@
               $_SESSION['usuario']['foto']   = $foto;
               notificaciones('Datos válidos');
               header("refresh:2;url=inicio.php");
-              
             } else {
               notificaciones('Clave incorrecta');
             }
@@ -66,14 +65,18 @@
   }
   //Botón de Registro
   if (isset($_POST["btnRegistrar"])) {
-    header("Location: registro.php");
+    if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] ) {
+      header("Location: registro.php");
+    } else {
+      notificaciones('Petición invalida');
+    }
   }
   anticsrf();
   ?>
   <!-- partial:index.partial.html -->
   <div class="index">
-  <h2 class="integrantes-header">Ricardo A. Triviño - Jose A. Muñoz</h2>
- </div>
+    <h2 class="integrantes-header">Ricardo A. Triviño - Jose A. Muñoz</h2>
+  </div>
   <div class="login">
     <div class="login-triangle"></div>
 
@@ -86,6 +89,7 @@
       <p><input type="submit" name="btnIngresar" value="Ingresar"></p>
     </form>
     <form class="login-container" method="post">
+    <input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>">
       <p><input type="submit" name="btnRegistrar" value="Registrar"></p>
     </form>
   </div>
@@ -94,4 +98,3 @@
 </body>
 
 </html>
-

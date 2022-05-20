@@ -335,13 +335,13 @@ function actualizarUsuario($campo, $valor, $usuario)
     $res = $query->execute([
         'valor' => $valor,
         'usuario' => $usuario,
-        
+
     ]);
     if ($res == true) {
         return true;
     } else {
         return false;
-    }                         
+    }
 }
 /**
  * Función que actualiza la clave
@@ -350,9 +350,10 @@ function actualizarUsuario($campo, $valor, $usuario)
  * @param: claveRepetir:  clave nueva para confirmar
  * @param: usuario:       Usuario actual para el cambio   
  */
-function actualizaClave($claveAnterior,$claveNueva,$claveRepetir,$usuario){
-    $conn = conexion(); 
-    $id_usuario=buscarIdUsuario($usuario);
+function actualizaClave($claveAnterior, $claveNueva, $claveRepetir, $usuario)
+{
+    $conn = conexion();
+    $id_usuario = buscarIdUsuario($usuario);
     //busco la clave actual
     $query = $conn->prepare("SELECT clave 
                              FROM usuario 
@@ -388,5 +389,66 @@ function actualizaClave($claveAnterior,$claveNueva,$claveRepetir,$usuario){
             return false;
         }
     }
+}
+/**
+ * Función que retorna todos los articulos públicos
+ */
+function todosArticulos()
+{
+    $conn = conexion();
+    $query = $conn->prepare("SELECT u.nombre, u.foto, a.texto, a.fecha_publi 
+                             FROM articulo a 
+                             JOIN usuario u ON a.id_usuario = u.id_usuario 
+                             WHERE a.publico = 'SI'
+                             order by a.fecha_publi desc");
+    $res = $query->execute();
+    if ($res == true) {
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        return $query->fetchAll();
+    }
+}
+/**
+ * Función que retorna articulos del usuario actual
+ * @param:id_articulo: Id del articulo a publicar o despublicar
+ */
+function ValidarMisArticulos($id_usuario)
+{
+    $conn = conexion();
 
+    $query = $conn->prepare("SELECT *
+                             FROM articulo a 
+                             WHERE a.id_usuario = :id_usuario");
+    $res = $query->execute([
+        'id_usuario' => $id_usuario
+    ]);
+    if ($res == true) {
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        return $query->fetchAll();
+    } else {
+        return 'error';
+    }
+}
+/**
+ * Función que retorna el id de usuario de un articulo
+ * @param:id_articulo
+ */
+function idUsuarioArticulo($id_articulo)
+{
+    $conn = conexion();
+
+    $query = $conn->prepare("SELECT *
+                             FROM articulo a 
+                             WHERE a.id_articulo = :id_articulo");
+    $res = $query->execute([
+        'id_articulo' => $id_articulo
+    ]);
+    if ($res == true) {
+        $query->setFetchMode(PDO::FETCH_OBJ);
+        foreach ($query as $data) {
+            $id = $data->id_usuario;
+            return $id;
+        }
+    } else {
+        return 'error';
+    }
 }

@@ -33,7 +33,7 @@
        <!-- partial:index.partial.html -->
             <div class="index">
                 <div class="index input">
-                    <form method="post">
+                    
                         <br>
                         <label name="lblAutor_1">Para: <?php echo $data->usuario; ?> </label>
                         <br>
@@ -44,7 +44,7 @@
                         <label name="lblFecha_1">Fecha:  <?php echo $data->fecha; ?> </label>
                         <br>
                         <a name="lnkAdjunto_1"href=" <?php echo $data->archivo?> "target="_blank">Arch. adjunto  </a>
-                    </form>
+                    
                 </div>
             </div>
             <!-- partial -->

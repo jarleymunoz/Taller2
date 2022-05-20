@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (validarClave($_POST['txtClave'])) {
             $claveHash =  password_hash($clave, PASSWORD_DEFAULT);
         } else {
-            echo 'Contraseña inválida';
+            echo 'Contraseña inválida. La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial';
             $clave = "";
             $claveHash = "";
         }

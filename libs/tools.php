@@ -258,19 +258,15 @@ function validarClave($clave)
         return false;
     }
     if (!preg_match('`[a-z]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
     if (!preg_match('`[A-Z]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
     if (!preg_match('`[0-9]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         return false;
     }
-    if (!preg_match('`[*,+,/,#]`', $clave)) {
-        notificaciones('La clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
+    if (!preg_match('`[*,+,/,#]`', $clave)) {        
         return false;
     }
     return true;

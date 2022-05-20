@@ -17,6 +17,7 @@ if(!isset($_SESSION['usuario']))
 {
    header("Location: index.php");
 }
+
 //Query que trae todos los articulos públicos.
  $query = $conn->prepare("SELECT u.nombre, u.foto, a.texto, a.fecha_publi 
                           FROM articulo a 
@@ -37,7 +38,6 @@ if(!isset($_SESSION['usuario']))
 <!-- partial:index.partial.html -->
  <div class="index">
      <div class="index input"> 
-       <form method="post">
         <br>
         <label name="lblAutor_1"><?php echo $data->nombre;?> </label>
         <br>
@@ -46,7 +46,7 @@ if(!isset($_SESSION['usuario']))
         <label name="lblTexto_1"><?php echo $data->texto;?> </label>
         <br>
         <label name="lblFecha_1"><?php echo $data->fecha_publi;?> </label>
-         </form>
+         
     </div>
 </div>
 <!-- partial -->
@@ -60,5 +60,5 @@ if(!isset($_SESSION['usuario']))
 ?>
 <?php
 //fin if
-}      
+} 
 ?>

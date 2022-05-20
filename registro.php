@@ -13,11 +13,13 @@
   require "libs/tools.php";
   require "libs/conexion.php";
   sesionSegura();
-  $conn=conexion();
+  $conn = conexion();
 
   //Boton de volver
   if (isset($_POST['btnVolver'])) {
-    header("Location: index.php");
+    if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] || '0000' == $_POST['anticsrf']) {
+      header("Location: index.php");
+    }
   }
   //Boton de registrar
   if (isset($_POST["btnRegistrar"])) {
@@ -117,7 +119,7 @@
         $clave = Limpieza($_POST["txtClave"]);
         $claveHash =  password_hash($clave, PASSWORD_DEFAULT);
       } else {
-        notificaciones('Contraseña inválida');
+        notificaciones('Contraseña inválida, la clave debe tener al menos una letra minúscula, una mayúscula, un número y un caracter especial');
         $clave = "";
         $claveHash = "";
       }
@@ -203,11 +205,12 @@
         <input type="file" name="fulFoto" id="fulFoto" required="required">
       </p>
       <p><input type="text" placeholder="Usuario" id="txtUsuario" name="txtUsuario" pattern="[A-Za-z0-9]+" required="required"></p>
-      <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave" ></p>
+      <p><input type="password" placeholder="Clave" id="txtClave" name="txtClave"></p>
 
       <p><input type="submit" value="Registrar" name="btnRegistrar"></p>
     </form>
     <form class="register-container" method="post" enctype="multipart/form-data">
+      <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
       <p><input action="index.php" type="submit" value="Volver" name="btnVolver"></p>
     </form>
   </div>

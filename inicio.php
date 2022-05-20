@@ -13,18 +13,20 @@
   require "libs/conexion.php";
   require "encabezado.php";
   LimpiezaKV();
-  $conn=conexion();
+  $conn = conexion();
   //si no existe la sesión va al index,
   if (!isset($_SESSION['usuario'])) {
     header("Location: index.php");
   } else {
     //Boton de artículos
+
     if (isset($_POST["lnkArticulos"])) {
-      if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] || '0000' == $_POST['anticsrf']) {
+      var_dump($_POST['anticsrf']);
+      if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
         header("Location: articulos.php");
       } else {
         notificaciones('Petición inválida');
-        header("refresh:2;url=inicio.php");
+        //header("refresh:2;url=inicio.php");
       }
     }
     //Boton de perfil

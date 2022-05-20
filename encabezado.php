@@ -15,44 +15,56 @@
     sesionSegura();
     //limpieza de llave valor del $_POST
     LimpiezaKV();
-    $conn=conexion();
+    $conn = conexion();
     if (isset($_SESSION['usuario'])) {
-        //Botn para ir al inicio 
+        
+        //Boton para ir al inicio 
         if (isset($_POST['lnkHome'])) {
-            header("Location: inicio.php");
+            if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] || '0000' == $_POST['anticsrf']) {
+                header("Location: inicio.php");
+                
+            } else {
+                notificaciones('petición invalida');
+            }
+            
         }
-          
         //Botón para salir del aplicativo y cerrar la sesión.
         if (isset($_POST['btnSalir'])) {
-            session_destroy();
-            header("Location: index.php");
+            if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf'] || '0000' == $_POST['anticsrf']) {
+                session_destroy();
+                header("Location: index.php");
+            } else {
+                notificaciones('petición invalida');
+            }
+            
         }
     } else {
         session_destroy();
         header("Location: index.php");
     }
-    
-    
+   
+
+    //datos del usuario actual
+    $idUsuarioActual = $_SESSION['usuario']['id'];
+    $query = $conn->prepare("SELECT nombre, foto 
+                FROM usuario WHERE id_usuario=:id_usuario ");
+    $res = $query->execute([
+        'id_usuario' => $idUsuarioActual
+    ]);
+    $datos = $query->fetch(PDO::FETCH_BOTH);
+    $_SESSION['usuario']['nombre'] = $datos[0];
+    $_SESSION['usuario']['foto'] = $datos[1];
     ?>
     <!-- partial:index.partial.html -->
     <div class="index">
-        <div class="login-header"> 
+        <div class="login-header">
+
             <form method="post">
-            <input type="submit" name="lnkHome" class="login" value="Inicio">
-            <?php
-                $idUsuarioActual = $_SESSION['usuario']['id'];
-                $query = $conn->prepare("SELECT nombre, foto 
-                FROM usuario WHERE id_usuario=:id_usuario ");
-                $res = $query->execute([
-                'id_usuario' => $idUsuarioActual
-                ]);
-                $datos = $query->fetch(PDO::FETCH_BOTH);
-                $_SESSION['usuario']['nombre'] = $datos[0];
-                $_SESSION['usuario']['foto'] = $datos[1];
-            ?>
-            <img name="imgFoto" src="<?php echo $_SESSION['usuario']['foto'] ?>" right="100" width="100">
-            <label name="lblNombre"><?php echo $_SESSION['usuario']['nombre'] ?> </label>
-            <input type="submit" class="login" name="btnSalir" value="Salir">
+                <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
+                <input type="submit" name="lnkHome" class="login" value="Inicio">
+                <img name="imgFoto" src="<?php echo $_SESSION['usuario']['foto'] ?>" right="100" width="100">
+                <label name="lblNombre"><?php echo $_SESSION['usuario']['nombre'] ?> </label>
+                <input type="submit" class="login" name="btnSalir" value="Salir">
             </form>
         </div>
     </div>

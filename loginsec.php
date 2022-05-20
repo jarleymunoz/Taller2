@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <title>Formulario de reCaptcha</title>
     <link rel="stylesheet" href="libs/style.css">
-    <script src = "https://www.google.com/recaptcha/api.js"async defer></script>
+    <script src="libs/recaptcha.js" async defer></script>
 
 </head>
 
 <body>
     <?php
+    
     require "libs/tools.php";
     require "libs/conexion.php";
     sesionSegura();
@@ -21,19 +22,18 @@
         $secretKey = "6LcinMkfAAAAALox4vSVPfk_EJ69cLDrQV7Hr1Cg";
         $captcha = $_POST["g-recaptcha-response"];
         $ip = $_SERVER['REMOTE_ADDR'];
-        
+
         //Chequear captcha con google
         $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" .
             $secretKey . "&response=" . $captcha . "&remoteip" . $ip);
-        
-            var_dump($response);
+
         $responseKeys = json_decode($response, true);
-        
+
         if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
             if (validarUsuario($_POST['txtUsuario']) == true && validarClave($_POST['txtClave']) == true) {
 
                 if (intval($responseKeys["success"]) == 1) {
-                    
+
 
                     $usuario = Limpieza($_POST["txtUsuario"]);
                     $clave = Limpieza($_POST["txtClave"]);
@@ -82,7 +82,12 @@
     }
     //Botón de Registro
     if (isset($_POST["btnRegistrar"])) {
-        header("Location: registro.php");
+
+        if (isset($_POST['anticsrf']) && isset($_SESSION['anticsrf']) && $_SESSION['anticsrf'] == $_POST['anticsrf']) {
+            header("Location: registro.php");
+        } else {
+            notificaciones('Petición invalida');
+        }
     }
     anticsrf();
     ?>
@@ -99,12 +104,15 @@
             <p><input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>"></p>
             <p><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" pattern="[A-Za-z0-9]+" required="required"></p>
             <p><input type="password" name="txtClave" id="txtClave" placeholder="Clave" pattern="^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$" required="required"></p>
-            <p><div class="g-recaptcha" data-sitekey="6LcinMkfAAAAAPP4RoTntihpGIlqmMi6hewnLb3T"></div></p>
+            <p>
+            <div class="g-recaptcha" data-sitekey="6LcinMkfAAAAAPP4RoTntihpGIlqmMi6hewnLb3T"></div>
+            </p>
             <p><input type="submit" name="btnIngresar" value="Ingresar"></p>
-            
+
 
         </form>
         <form class="login-container" method="post">
+            <input type="hidden" id="anticsrf" name="anticsrf" value="<?php echo $_SESSION['anticsrf'] ?>">
             <p><input type="submit" name="btnRegistrar" value="Registrar"></p>
         </form>
     </div>
